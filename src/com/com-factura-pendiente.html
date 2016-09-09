@@ -1,0 +1,87 @@
+
+<dom-module id="com-factura-pendiente">
+    <template>
+        <style>
+        </style>
+        <p>
+        <paper-checkbox on-change="_controlarCambioSeleccion"></paper-checkbox>
+        <span>{{codigoError}}</span>
+        <span>{{descripcionError}}</span>
+        <span>{{descripcionPeriodo}}</span>
+        <span>{{descripcionTipoFactura}}</span>
+        <span>{{fechaVencimiento}}</span>
+        <span>{{montoDeuda}}</span>
+        <span>{{numFactura}}</span>
+        </p>
+    </template>
+    <script>
+        Polymer({
+            is: 'com-factura-pendiente',
+            properties: {
+                data: Object,
+                codigoError: {
+                    type: String,
+                    computed: '_getCodigoError(data)'
+                },
+                descripcionError: {
+                    type: String,
+                    computed: '_getDescripcionError(data)'
+                },
+                descripcionPeriodo: {
+                    type:String,
+                    computed: '_getDescripcionPeriodo(data)'
+                },
+                descripcionTipoFactura: {
+                    type:String,
+                    computed: '_getDescripcionTipoFactura(data)'
+                },
+                fechaVencimiento: {
+                    type:String,
+                    computed: '_getFechaVencimiento(data)'
+                },
+                montoDeuda: {
+                    type:String,
+                    computed: '_getMontoDeuda(data)'
+                },
+                numFactura: {
+                    type:String,
+                    computed: '_getNumFactura(data)'
+                },
+                montoActual: {
+                    type: Number,
+                    value: 0,
+                    readOnly: true,
+                    notify: true
+                }
+            },
+            _getCodigoError: function(data){
+                return data.codigoError;
+            },
+            _getDescripcionError: function(data){
+                return data.descripcionError;
+            },
+            _getDescripcionPeriodo: function(data){
+                return data.descripcionPeriodo;
+            },
+            _getDescripcionTipoFactura: function(data){
+                return data.descripcionTipoFactura;
+            },
+            _getFechaVencimiento: function(data){
+                return data.fechaVencimiento;
+            },
+            _getMontoDeuda: function(data){
+                return data.montoDeuda;
+            },
+            _getNumFactura: function(data){
+                return data.numeroSecuencia;
+            },
+            _controlarCambioSeleccion: function() {
+                var seleccionada = this.$$('paper-checkbox').checked;
+                if(seleccionada)
+                    this.montoActual = this.montoDeuda;
+                else
+                    this.montoActual = 0;
+            }
+        });
+    </script>
+</dom-module>

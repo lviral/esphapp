@@ -1,0 +1,65 @@
+<link rel="import" href="../utils/com-constantes-app.html">
+
+<dom-module id="rest-api">
+    <template>
+        <iron-ajax
+        auto
+        url="[[url]]"
+        handle-as="json"
+        method="[[method]]"
+        content-type="[[contentType]]"
+        body="[[body]]"
+        on-response="_handleResponse"
+        last-response="{{respuesta}}"></iron-ajax>
+    </template>
+    <script>
+        Polymer({
+            is: 'rest-api',
+            properties: {
+                url: {
+                    type: String,
+                    computed: '_obtenerURL(queryString)'
+                },
+                queryString: String,
+                respuesta: {
+                    type: Object,
+                    notify: true
+                },
+                endpoint: {
+                    type: String,
+                    value: 'esph'
+                },
+                method: {
+                    type: String,
+                    value: 'GET'
+                },
+                contentType: {
+                    type: String,
+                    value: 'application/json'
+                },
+                body: {
+                    type: String,
+                    value: ''
+                }
+            },
+            _obtenerURL: function(){
+                var epKey;
+                switch(this.endpoint) {
+                    case 'drupal':
+                        epKey = 'restApiDrupal';
+                        break;
+                    default:
+                        epKey = 'restApi';
+                        break;
+                }
+                
+    
+                console.log(new Polymer.IronMetaQuery({key:epKey}).value + this.queryString);
+                return new Polymer.IronMetaQuery({key:epKey}).value + this.queryString;  
+            },
+            _handleResponse: function(){
+                //console.log(this.respuesta);
+            }
+        });
+    </script>
+</dom-module>

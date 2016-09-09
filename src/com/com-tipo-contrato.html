@@ -1,0 +1,80 @@
+
+<dom-module id="com-tipo-contrato">
+    <template>
+        <style>
+            .avatar:not([style-scope]):not(.style-scope) {
+                display: inline-block;
+                box-sizing: border-box;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #ffc107;
+                cursor: pointer;
+            }
+            .blue:not([style-scope]):not(.style-scope) {
+                background-color: var(--paper-blue-500);
+            }
+            .orange:not([style-scope]):not(.style-scope) {
+                background-color: var(--paper-orange-500);
+            }
+            .yellow:not([style-scope]):not(.style-scope) {
+                background-color: var(--paper-yellow-500);
+            }
+        </style>
+        <rest-api query-string="ConsultarTipoContrato/{{contrato}}" respuesta="{{respuesta}}"></rest-api>
+        <paper-icon-item>
+            <div id="avatarServicio" class$="{{color}}" item-icon></div>
+            <paper-item-body two-line>
+              <div>{{contrato}}</div>
+              <div secondary>{{nombreCliente}}</div>
+            </paper-item-body>
+            <paper-icon-button icon="delete"></paper-icon-button>
+        </paper-icon-item>
+        <paper-tooltip for="avatarServicio" offset="0">{{descripcion}}</paper-tooltip>
+    </template>
+    <script>
+        Polymer({
+            is: 'com-tipo-contrato',
+            properties: {
+                respuesta: Object,
+                contrato: Number,
+                codigo: {
+                    type: Number,
+                    computed: '_getCodigo(respuesta)'
+                },
+                nombreCliente: {
+                    type: String,
+                    computed: '_getNombreCliente(respuesta)'
+                },
+                descripcion: {
+                    type:String,
+                    computed: '_getDescripcion(respuesta)'
+                },
+                color: {
+                    type: String,
+                    computed: '_getColor(respuesta)'
+                }
+            },
+            _getCodigo: function(data){
+                return data.codigoTipoServicio;
+            },
+            _getNombreCliente: function(data){
+                return data.nombreCliete;
+            },
+            _getDescripcion: function(data){
+                return data.tipoServicio;
+            },
+            _getColor: function(data){
+                var circulo= 'avatar';
+                switch(data.codigoTipoServicio) {
+                    case 1:
+                        return circulo + ' blue';
+                    case 2:
+                        return circulo + ' orange';
+                    default:
+                        return circulo + ' yellow';
+                }
+            }
+        });
+    </script>
+</dom-module>

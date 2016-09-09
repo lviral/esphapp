@@ -1,0 +1,71 @@
+<link rel="import" href="../dal/rest-api.html">
+<link rel="import" href="com-factura-pendiente.html">
+
+<dom-module id="com-servicio-pendiente">
+    
+    <template>
+        <style>
+        </style>
+        
+        <rest-api query-string="ConsultarFacturasPendientes/{{contrato}}-{{codigoTipoServicio}},/{{codigoTipoBusqueda}}/{{codigoBusqueda}}" 
+                  respuesta="{{respuesta}}"></rest-api>
+        
+        <p>
+            <div style="border:1px solid blue;">
+            <span>{{contrato}}</span>
+            <span>{{identificacionCliente}}</span>
+            <span>{{nombreCliente}}</span>
+            <span>{{descripcionServicio}}</span>
+            </div>
+            <template is="dom-repeat" items="{{respuesta}}" as="factura">
+                <com-factura-pendiente data="{{factura}}"></com-factura-pendiente>
+            </template>
+        </p>
+            
+    </template> 
+
+  <script>
+
+    Polymer({
+
+      is: 'com-servicio-pendiente',
+        
+      properties: {
+          respuesta: Object,
+          contrato: String,
+          codigoTipoServicio: String,
+          codigoTipoBusqueda: {
+              type: String,
+              value: '1'
+          },
+          codigoBusqueda: {
+              type: String,
+              value: 'CON'
+          },
+          identificacionCliente: {
+              type: String,
+              computed: '_getIdentificacionCliente(respuesta)'
+          },
+          nombreCliente: {
+              type: String,
+              computed: '_getNombreCliente(respuesta)'
+          },
+          descripcionServicio: {
+              type: String,
+              computed: '_getDescripcionServicio(respuesta)'
+          }
+      },
+      _getIdentificacionCliente: function(data){
+          return data[0].identificacion;
+      },
+      _getNombreCliente: function(data){
+          return data[0].nombreCliente;
+      },
+      _getDescripcionServicio: function(data){
+          return data[0].descripcionServicio;
+      }        
+    });
+
+  </script>
+
+</dom-module>

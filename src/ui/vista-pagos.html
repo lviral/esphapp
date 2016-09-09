@@ -1,0 +1,114 @@
+<link rel="import" href="../com/com-tipo-contrato.html">
+<link rel="import" href="../com/com-servicio-pendiente.html">
+
+<dom-module id="vista-pagos">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 22px;
+        margin: 16px 0;
+        color: #212121;
+      }
+        
+      .divTable {
+       display: table;
+       width: 90%;
+       margin: 0 auto;
+      }
+      
+      .divRow
+      {
+       display:table-row;
+      }
+
+      .divCell {
+       display:table-cell;
+       padding: 10px;
+       vertical-align: middle;
+      }
+    </style>
+      
+        <div hidden$="{{vistaTipoContratoOculta}}">
+            <div class="divTable"> 
+                <div class="divRow">
+                    <div class="divCell">
+                         <paper-input label='Contrato' value='{{txtContratoConsulta}}'></paper-input>
+                    </div>
+                    <div class="divCell">
+                        <paper-fab icon="add" mini="true" on-click='_agregarTipoContrato'></paper-fab>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="listaTipoContrato">
+            </div>
+            
+            <paper-fab icon="arrow-forward" mini="true" on-click='_mostrarVistaFacturas'></paper-fab>
+        </div>
+      
+        <div hidden$="{{vistaFacturasOculta}}">
+            <paper-checkbox on-change="_controlarSeleccionarTodos">Seleccionar todos</paper-checkbox>
+                <div id="listaServiciosPendientes">
+                    <com-servicio-pendiente contrato="5300" codigo-tipo-servicio="1"></com-servicio-pendiente>
+                </div>
+            <paper-fab icon="arrow-back" mini="true" on-click='_mostrarVistaTipoContrato'></paper-fab>
+        </div>
+    
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'vista-pagos',
+        
+      properties: {
+        vistaTipoContratoOculta: Boolean,
+        vistaFacturasOculta: Boolean
+      },
+        
+      ready: function() {
+          this.vistaTipoContratoOculta = true;
+          this.vistaFacturasOculta = false;
+      },
+      
+      _agregarTipoContrato: function() {
+          var tipoContratoElem = document.createElement("com-tipo-contrato");
+          tipoContratoElem.setAttribute("contrato", this.txtContratoConsulta);
+          this.$.listaTipoContrato.appendChild(tipoContratoElem);  
+      },
+        
+      _mostrarVistaFacturas: function() {
+          //if(this.listaContratos.length > 0) {
+              this.vistaFacturasOculta= false;
+              this.vistaTipoContratoOculta= true;
+          
+          
+              var listaContratos = Polymer.dom(this.$.listaTipoContrato).querySelectorAll('com-tipo-contrato');
+              listaContratos.forEach(function(tipoContrato){
+                  console.log(tipoContrato.contrato);
+              });
+          //    this.paramConsultarFacturasPendientes = this.listaTipoContrato;
+         // }
+        //  else {
+        //      this.$.toastNohayContratos.open();
+        //  }
+      },
+        
+      _mostrarVistaTipoContrato: function() {
+          this.vistaFacturasOculta= true;
+          this.vistaTipoContratoOculta= false;
+      } 
+     
+    });
+
+  </script>
+
+</dom-module>
