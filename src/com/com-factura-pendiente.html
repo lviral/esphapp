@@ -47,11 +47,9 @@
                     type:String,
                     computed: '_getNumFactura(data)'
                 },
-                montoActual: {
-                    type: Number,
-                    value: 0,
-                    readOnly: true,
-                    notify: true
+                seleccionada: {
+                    type: Boolean,
+                    value: false
                 }
             },
             _getCodigoError: function(data){
@@ -76,11 +74,8 @@
                 return data.numeroSecuencia;
             },
             _controlarCambioSeleccion: function() {
-                var seleccionada = this.$$('paper-checkbox').checked;
-                if(seleccionada)
-                    this.montoActual = this.montoDeuda;
-                else
-                    this.montoActual = 0;
+                this.seleccionada = this.$$('paper-checkbox').checked;
+                this.fire('custom-change');
             }
         });
     </script>

@@ -36,6 +36,10 @@
     </style>
       
         <div hidden$="{{vistaTipoContratoOculta}}">
+            <paper-radio-group>
+                <paper-radio-button name="porContrato">Por Contrato</paper-radio-button>
+                <paper-radio-button name="porId">Por Identificacion</paper-radio-button>
+            </paper-radio-group>
             <div class="divTable"> 
                 <div class="divRow">
                     <div class="divCell">
@@ -75,8 +79,8 @@
       },
         
       ready: function() {
-          this.vistaTipoContratoOculta = true;
-          this.vistaFacturasOculta = false;
+          this.vistaTipoContratoOculta = false;
+          this.vistaFacturasOculta = true;
       },
       
       _agregarTipoContrato: function() {

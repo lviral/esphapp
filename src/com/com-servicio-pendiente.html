@@ -18,7 +18,7 @@
             <span>{{descripcionServicio}}</span>
             </div>
             <template is="dom-repeat" items="{{respuesta}}" as="factura">
-                <com-factura-pendiente data="{{factura}}"></com-factura-pendiente>
+                <com-factura-pendiente data="{{factura}}" on-custom-change="_calcularTotal"></com-factura-pendiente>
             </template>
         </p>
             
@@ -53,6 +53,10 @@
           descripcionServicio: {
               type: String,
               computed: '_getDescripcionServicio(respuesta)'
+          },
+          montoTotal: {
+              type: Number,
+              value: 0
           }
       },
       _getIdentificacionCliente: function(data){
@@ -63,7 +67,15 @@
       },
       _getDescripcionServicio: function(data){
           return data[0].descripcionServicio;
-      }        
+      },
+      _calcularTotal: function(e){
+          if(e.target.seleccionada)
+            this.montoTotal += e.target.montoDeuda;
+          else
+            this.montoTotal -= e.target.montoDeuda;
+          
+          console.log(this.montoTotal);
+      }
     });
 
   </script>
