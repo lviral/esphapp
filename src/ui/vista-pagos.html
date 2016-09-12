@@ -1,5 +1,6 @@
 <link rel="import" href="../com/com-tipo-contrato.html">
 <link rel="import" href="../com/com-servicio-pendiente.html">
+<link rel="import" href="../com/com-tipos-id.html">
 
 <dom-module id="vista-pagos">
 
@@ -36,19 +37,24 @@
     </style>
       
         <div hidden$="{{vistaTipoContratoOculta}}">
-            <paper-radio-group>
+            <paper-radio-group selected="porContrato" on-paper-radio-group-changed="_controlarCambioTipoBusqueda">
                 <paper-radio-button name="porContrato">Por Contrato</paper-radio-button>
                 <paper-radio-button name="porId">Por Identificacion</paper-radio-button>
             </paper-radio-group>
-            <div class="divTable"> 
-                <div class="divRow">
-                    <div class="divCell">
-                         <paper-input label='Contrato' value='{{txtContratoConsulta}}'></paper-input>
-                    </div>
-                    <div class="divCell">
-                        <paper-fab icon="add" mini="true" on-click='_agregarTipoContrato'></paper-fab>
+            <div hidden$="{{vistaBusquedaPorContratoOculta}}">
+                <div class="divTable"> 
+                    <div class="divRow">
+                        <div class="divCell">
+                             <paper-input label='Contrato' value='{{txtContratoConsulta}}'></paper-input>
+                        </div>
+                        <div class="divCell">
+                            <paper-fab icon="add" mini="true" on-click='_agregarTipoContrato'></paper-fab>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div hidden$="{{vistaBusquedaPorIdOculta}}">
+                <com-tipos-id></com-tipos-id>
             </div>
             
             <div id="listaTipoContrato">
@@ -74,11 +80,16 @@
       is: 'vista-pagos',
         
       properties: {
+        vistaBusquedaPorContratoOculta: Boolean,
+        vistaBusquedaPorIdOculta: Boolean,
         vistaTipoContratoOculta: Boolean,
         vistaFacturasOculta: Boolean
       },
         
       ready: function() {
+          
+          this.vistaBusquedaPorContratoOculta = false;
+          this.vistaBusquedaPorIdOculta = true;
           this.vistaTipoContratoOculta = false;
           this.vistaFacturasOculta = true;
       },
@@ -109,7 +120,18 @@
       _mostrarVistaTipoContrato: function() {
           this.vistaFacturasOculta= true;
           this.vistaTipoContratoOculta= false;
-      } 
+      },
+        
+      _controlarCambioTipoBusqueda: function(e) {
+          if(e.target.selected=='porContrato') {
+              this.vistaBusquedaPorContratoOculta = false;
+              this.vistaBusquedaPorIdOculta = true;
+          }
+          else {
+              this.vistaBusquedaPorContratoOculta = true;
+              this.vistaBusquedaPorIdOculta = false;
+          }
+      }
      
     });
 

@@ -1,0 +1,20 @@
+<dom-module id="com-tipos-id">
+    <template>
+        <rest-api query-string="ConsultarTiposIdentificacion" respuesta="{{respuesta}}"></rest-api>
+            <paper-dropdown-menu-light label="Tipos Identificación">
+              <paper-listbox class="dropdown-content" selected="1">
+                <template is="dom-repeat" items="{{respuesta}}" as="tipoId">
+                    <paper-item>{{tipoId.descripcion}}</paper-item>
+                </template>
+              </paper-listbox>
+            </paper-dropdown-menu-light>
+    </template>
+    <script>
+        Polymer({
+            is: 'com-tipos-id',
+            properties: {
+                respuesta: Object
+            }
+        });
+    </script>
+</dom-module>
