@@ -1,6 +1,7 @@
 <link rel="import" href="../com/com-tipo-contrato.html">
 <link rel="import" href="../com/com-servicio-pendiente.html">
 <link rel="import" href="../com/com-tipos-id.html">
+<link rel="import" href="../com/com-num-op-vpos.html">
 
 <dom-module id="vista-pagos">
 
@@ -66,9 +67,11 @@
         <div hidden$="{{vistaFacturasOculta}}">
             <paper-checkbox on-change="_controlarSeleccionarTodos">Seleccionar todos</paper-checkbox>
                 <div id="listaServiciosPendientes">
+                    <!--<com-num-op-vpos num-op-vpos="{{numOpVpos}}"></com-num-op-vpos>-->
                     <com-servicio-pendiente contrato="5300" codigo-tipo-servicio="1"></com-servicio-pendiente>
                 </div>
             <paper-fab icon="arrow-back" mini="true" on-click='_mostrarVistaTipoContrato'></paper-fab>
+            <paper-fab icon="arrow-forward" mini="true" on-click='_enviarDatosAVPOS'></paper-fab>
         </div>
     
   </template>
@@ -83,7 +86,8 @@
         vistaBusquedaPorContratoOculta: Boolean,
         vistaBusquedaPorIdOculta: Boolean,
         vistaTipoContratoOculta: Boolean,
-        vistaFacturasOculta: Boolean
+        vistaFacturasOculta: Boolean,
+        numOpVpos: String
       },
         
       ready: function() {
@@ -131,6 +135,14 @@
               this.vistaBusquedaPorContratoOculta = true;
               this.vistaBusquedaPorIdOculta = false;
           }
+      },
+        
+      _enviarDatosAVPOS: function() {
+          
+          var elemNumOpVPOS = document.createElement('com-num-op-vpos');
+          numOpVpos.setAttribute('num-op-vpos', '[[numOpVpos]]');
+          this.$.listaServiciosPendientes.appendChild(elemNumOpVPOS);
+          console.log(this.numOpVpos);
       }
      
     });

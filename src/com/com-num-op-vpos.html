@@ -1,0 +1,23 @@
+<link rel="import" href="../dal/rest-api.html">
+
+<dom-module id="com-num-op-vpos">
+    <template>
+        <style>
+        </style>
+        {{numOpVpos}}
+        <rest-api endpoint="interno" query-string="ObtenerNumOperacionVPOS" respuesta="{{numOpVpos}}" ></rest-api>
+    </template>
+    <script>
+        Polymer({
+            is: 'com-num-op-vpos',
+            properties: {
+                numOpVpos: {
+                    type: String,
+                    notify: true
+                    
+                }
+            }
+        });
+        
+    </script>
+</dom-module>

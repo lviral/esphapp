@@ -48,6 +48,9 @@
                     case 'drupal':
                         epKey = 'restApiDrupal';
                         break;
+                    case 'interno':
+                        epKey = 'restApiInterno';
+                        break;
                     default:
                         epKey = 'restApi';
                         break;
@@ -58,7 +61,7 @@
                 return new Polymer.IronMetaQuery({key:epKey}).value + this.queryString;  
             },
             _handleResponse: function(){
-                //console.log(this.respuesta);
+                console.log(this.respuesta);
             }
         });
     </script>
