@@ -1,0 +1,17 @@
+<link rel="import" href="com-punto-recaudacion.html">
+<dom-module id="com-lista-puntos-recaudacion">
+    <template>
+        <rest-api endpoint="drupal" query-string="views/recaudadores.json" respuesta="{{respuesta}}"></rest-api>
+        <template is="dom-repeat" items="{{respuesta}}" as="recaudador">
+            <com-punto-recaudacion data="{{recaudador}}"></com-punto-recaudacion>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: 'com-lista-puntos-recaudacion',
+            properties: {
+                respuesta: Object
+            }
+        });
+    </script>
+</dom-module>

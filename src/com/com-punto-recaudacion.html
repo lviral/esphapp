@@ -1,0 +1,20 @@
+<dom-module id="com-punto-recaudacion">
+    <template>
+        <paper-item>{{nombre}}</paper-item>
+    </template>
+    <script>
+        Polymer({
+            is: 'com-punto-recaudacion',
+            properties: {
+                data: Object,
+                nombre: {
+                    type: String,
+                    computed: '_getNombre(data)'
+                }
+            },
+            _getNombre: function(data) {
+                return data.nombre;
+            }
+        });
+    </script>
+</dom-module>

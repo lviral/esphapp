@@ -1,0 +1,47 @@
+<link rel="import" href="../com/geo-location.html">
+<dom-module id="com-prueba">
+    <template>
+        holis!!!
+        <div style="width:100%; height:500px;">
+          <geo-location latitude="{{lat}}" longitude="{{lng}}"></geo-location>          
+          <google-map-search map="[[map]]" query="Mas X Menos" results="{{resultsMasXMenos}}"></google-map-search>
+          <google-map-search map="[[map]]" query="DAVIVIENDA" results="{{resultsDavivienda}}"></google-map-search>
+          <google-map-search map="[[map]]" query="Farmaia Fischel" results="{{resultsFischel}}"></google-map-search>
+          <google-map map="{{map}}" latitude="[[lat]]" longitude="[[lng]]" api-key="AIzaSyAnbySgBpQXN9-L3PO7gEOgpigeKP2jnLw" zoom="12">
+            <template is="dom-repeat" items="{{resultsMasXMenos}}" as="marker">
+              <google-map-marker latitude="{{marker.latitude}}"
+                                 longitude="{{marker.longitude}}">
+                <h2>{{marker.name}}</h2>
+                <span>{{marker.formatted_address}}</span>
+              </google-map-marker>
+            </template>
+            <template is="dom-repeat" items="{{resultsDavivienda}}" as="marker">
+              <google-map-marker latitude="{{marker.latitude}}"
+                                 longitude="{{marker.longitude}}">
+                <h2>{{marker.name}}</h2>
+                <span>{{marker.formatted_address}}</span>
+              </google-map-marker>
+            </template>
+            <template is="dom-repeat" items="{{resultsFischel}}" as="marker">
+              <google-map-marker latitude="{{marker.latitude}}"
+                                 longitude="{{marker.longitude}}">
+                <h2>{{marker.name}}</h2>
+                <span>{{marker.formatted_address}}</span>
+              </google-map-marker>
+            </template>
+              <google-map-marker icon="../images/app-icon-32.png" latitude="[[lat]]" longitude="[[lng]]"></google-map-marker>
+          </google-map>
+         </div>
+    </template>
+       
+    <script>
+        Polymer({
+            is: 'com-prueba',
+            properties: {
+            },
+            ready: function() {
+                console.log(this.results);
+            }
+        });
+    </script
+</dom-module>

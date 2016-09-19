@@ -1,19 +1,26 @@
 <dom-module id="com-tipos-id">
     <template>
         <rest-api query-string="ConsultarTiposIdentificacion" respuesta="{{respuesta}}"></rest-api>
-            <paper-dropdown-menu-light label="Tipos Identificación">
-              <paper-listbox class="dropdown-content" selected="1">
-                <template is="dom-repeat" items="{{respuesta}}" as="tipoId">
-                    <paper-item>{{tipoId.descripcion}}</paper-item>
-                </template>
-              </paper-listbox>
-            </paper-dropdown-menu-light>
+        <paper-dropdown-menu-light label="Tipos Identificación">
+          <paper-listbox id="lista" class="dropdown-content" selected="1" on-iron-select="_controlarCambiarSeleccion">
+            <template is="dom-repeat" items="{{respuesta}}" as="tipoId">
+                <paper-item value="{{tipoId.tipoIdentificacionId}}">{{tipoId.descripcion}}</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu-light>
+        <paper-input id="numId" label="{{formato}}"></paper-input>
     </template>
     <script>
         Polymer({
             is: 'com-tipos-id',
             properties: {
-                respuesta: Object
+                respuesta: Object,
+                formato: {
+                    type: String
+                }
+            },
+            _controlarCambiarSeleccion: function() {
+                this.formato = this.respuesta[this.$.lista.selected].formato;
             }
         });
     </script>

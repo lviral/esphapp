@@ -1,0 +1,44 @@
+<link rel="import" href="../com/com-lista-puntos-recaudacion.html">
+<link rel="import" href="../com/map-puntos-recaudacion.html">
+
+<dom-module id="vista-puntos-recaudacion">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+    <div hidden$="{{vistaListaOculta}}">
+        <com-lista-puntos-recaudacion></com-lista-puntos-recaudacion>
+    </div> 
+    <div id="contenedorMapa" hidden$="{{vistaMapaOculta}}">
+        <map-puntos-recaudacion></map-puntos-recaudacion>
+    </div>
+    <paper-fab style="position: fixed; right: 25px; bottom: 30px;" icon="arrow-forward" on-click='_mostrarVistaMapa'></paper-fab>
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'vista-puntos-recaudacion',
+      properties: {
+          vistaListaOculta: Boolean,
+          vistaMapaOculta: Boolean
+      },
+      ready: function() {
+          this.vistaListaOculta = false;
+          this.vistaMapaOculta = true;
+          
+      },
+      _mostrarVistaMapa: function() {
+        this.vistaListaOculta = !(this.vistaMapaOculta = this.vistaListaOculta);
+        this.$.contenedorMapa.width = "100%";
+      }
+    });
+
+  </script>
+
+</dom-module>
