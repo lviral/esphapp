@@ -27,11 +27,13 @@
             }
 
             paper-card {
-              /*max-width: 900px;
-              min-width: 400px;*/
+              width:90%; 
+              margin: 0 auto;
+              display: block;
+              margin-top: 10px; 
              
             }
-            @media all and (min-width: 700px) {
+           /* @media all and (min-width: 700px) {
               :host[show] {
                 @apply(--layout-justified);
               }
@@ -47,21 +49,80 @@
               :host {
                 width: 90%;
               }
-            }   
-
+            }   */
+            
+            .divTableHeader {
+             display: table;
+            }
+            .divRow
+            {
+             display:table-row;
+            }
+            .divCell {
+             display:table-cell;
+             padding: 10px;
+             vertical-align: middle;
+             @apply(--paper-font-body1);
+            }
+            .avatar:not([style-scope]):not(.style-scope) {
+                display: inline-block;
+                box-sizing: border-box;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                /*background: #ffc107;*/
+                cursor: pointer;
+                left:10px;
+            }
+            .agua:not([style-scope]):not(.style-scope) {
+                background-image: url('../../images/water-drop.png');
+            }
+            .ener:not([style-scope]):not(.style-scope) {
+                background-image: url('../../images/thunderbold.png');
+            }
+            .tele:not([style-scope]):not(.style-scope) {
+                background-image: url('../../images/thunderbold.png');
+            }
+            
+            
+            .azul {
+                color: #1c5a7d;
+            }
+            .naranja {
+                color: #e75300;
+            }
+            .amarillo {
+                color: yellow;
+            },
+            .gris {
+                color: grey;
+            }
         </style>
         
         <rest-api query-string="ConsultarFacturasPendientes/{{contrato}}-{{codigoTipoServicio}},/{{codigoTipoBusqueda}}/{{codigoBusqueda}}" 
                   respuesta="{{respuesta}}"></rest-api>
         
         <div>
-            <paper-card style="width:100%; margin: 0 auto;">
-                <div class="encabezado">
-                    <div>Contrato: {{contrato}}</div>
-                    <template is="dom-if" if="{{nombreCliente}}">
-                        <div>Cliente: {{nombreCliente}}</div>
-                        <div>Tipo: {{descripcionServicio}}</div>
-                    </template>
+            <paper-card>
+                <div class="encabezado" class$="{{color}}">
+                    
+                    <div class="divTableHeader"> 
+                        <div class="divRow">
+                            <template is="dom-if" if="{{nombreCliente}}">
+                                <div class="divCell">
+                                    <div id="avatarServicio" class$="{{avatar}}" item-icon></div>
+                                </div>
+                            </template>
+                            <div class="divCell">
+                                <div>Contrato: {{contrato}}</div>
+                                <template is="dom-if" if="{{nombreCliente}}">
+                                    <div>Cliente: {{nombreCliente}}</div>
+                                    <div>Tipo: {{descripcionServicio}}</div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 <template is="dom-repeat" items="{{respuesta}}" as="factura">
                     <template is="dom-if" if="{{nombreCliente}}">
@@ -112,6 +173,14 @@
           todasSeleccionadas: {
               type: Boolean,
               value: false
+          },
+          avatar: {
+              type: String,
+              computed: '_setAvatar(respuesta)'
+          },
+          color: {
+              type: String,
+              computed: '_setColor(respuesta)'
           }
       },
       _setIdentificacionCliente: function(data){
@@ -122,6 +191,27 @@
       },
       _setDescripcionServicio: function(data){
           return data[0].descripcionServicio;
+      },
+      _setAvatar: function(data){
+          var circulo= 'avatar';
+          switch(data[0].descripcionServicio) {
+              case 'AGUA':
+                  return circulo + ' agua';
+              case 'ENERGIA':
+                  return circulo + ' ener';
+              default:
+                  return circulo + ' tele';
+          }
+      },
+      _setColor: function(data){
+          switch(data[0].descripcionServicio) {
+              case 'AGUA':
+                  return 'azul';
+              case 'ENERGÍA':
+                  return 'naranja';
+              default:
+                  return 'gris';
+          }
       },
       _calcularTotal: function(e, factura){
           if(factura.seleccionada)
