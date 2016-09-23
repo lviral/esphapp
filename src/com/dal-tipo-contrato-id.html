@@ -1,0 +1,20 @@
+<link rel="import" href="../dal/rest-api.html">
+<dom-module id="dal-tipo-contrato-id">
+    <template>
+        <rest-api endpoint="interno" query-string="ConsultarTipoContratoID/{{numId}}/{{tipoId}}" 
+                  respuesta="{{respuesta}}" on-rest-response="_controlarRespuesta"></rest-api>
+    </template>
+    <script>
+        Polymer({
+            is: 'dal-tipo-contrato-id',
+            properties: {
+                respuesta: Object,
+                numId: String,
+                tipoId: String
+            },
+            _controlarRespuesta: function() {
+                this.fire('com-response', this.respuesta);
+            }
+        });
+    </script>
+</dom-module>

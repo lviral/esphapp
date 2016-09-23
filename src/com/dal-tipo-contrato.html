@@ -1,0 +1,20 @@
+<link rel="import" href="../dal/rest-api.html">
+<dom-module id="dal-tipo-contrato">
+    <template>
+        <rest-api query-string="ConsultarTipoContrato/{{contrato}}" respuesta="{{respuesta}}" 
+                  on-rest-response="_controlarRespuesta"></rest-api>
+    </template>
+    <script>
+        Polymer({
+            is: 'dal-tipo-contrato',
+            properties: {
+                respuesta: Object,
+                contrato: String
+            },
+            _controlarRespuesta: function() {
+                this.respuesta.contrato = this.contrato;
+                this.fire('com-response', this.respuesta);
+            }
+        });
+    </script>
+</dom-module>

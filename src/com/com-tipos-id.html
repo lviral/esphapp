@@ -1,14 +1,14 @@
 <dom-module id="com-tipos-id">
     <template>
-        <rest-api query-string="ConsultarTiposIdentificacion" respuesta="{{respuesta}}"></rest-api>
+        <rest-api query-string="ConsultarTiposIdentificacion" respuesta="{{respuesta}}" on-rest-response="_controlarRespuesta"></rest-api>
         <paper-dropdown-menu-light label="Tipos Identificación">
-          <paper-listbox id="lista" class="dropdown-content" selected="1" on-iron-select="_controlarCambiarSeleccion">
+          <paper-listbox id="lista" class="dropdown-content" selected="0" on-iron-select="_controlarCambiarSeleccion">
             <template is="dom-repeat" items="{{respuesta}}" as="tipoId">
                 <paper-item value="{{tipoId.tipoIdentificacionId}}">{{tipoId.descripcion}}</paper-item>
             </template>
           </paper-listbox>
         </paper-dropdown-menu-light>
-        <paper-input id="numId" label="{{formato}}"></paper-input>
+        <paper-input id="numId" label="{{formato}}" value="{{numId}}"></paper-input>
     </template>
     <script>
         Polymer({
@@ -17,9 +17,23 @@
                 respuesta: Object,
                 formato: {
                     type: String
+                },
+                numId: {
+                    type: String,
+                    value: '',
+                    notify: true
+                },
+                tipoId: {
+                    type: String,
+                    value: '',
+                    notify: true
                 }
             },
+            _controlarRespuesta: function(e, respuestaTiposId) {
+                this.tipoId = respuestaTiposId[0].tipoIdentificacionId;
+            },
             _controlarCambiarSeleccion: function() {
+                this.tipoId = this.$$('paper-listbox').selectedItem.value;
                 this.formato = this.respuesta[this.$.lista.selected].formato;
             }
         });

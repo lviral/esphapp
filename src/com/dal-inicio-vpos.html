@@ -1,0 +1,55 @@
+<link rel="import" href="../dal/rest-api.html">
+<link rel="import" href="dal-num-op-vpos.html">
+
+<dom-module id="dal-inicio-vpos">
+    <template>
+        <dal-num-op-vpos num-op-vpos="{{numOp}}" on-num-op-response="_controlarRespuestaNumOp"></dal-num-op-vpos>
+        <rest-api auto="false"  endpoint="interno" query-string="IniciarVPOS/{{numOp}}/{{monto}}/{{codMoneda}}/{{codLengueje}}" 
+                  on-rest-response="_controlarRespuestaIniciarVPOS" ></rest-api>
+    </template>
+    <script>
+        Polymer({
+            is: 'dal-inicio-vpos',
+            properties: {
+                respuesta: {
+                    type: Object,
+                    notify: true
+                },
+                numOp: String,
+                monto: {
+                    type: String
+                },
+                codMoneda: {
+                    type: String,
+                    value: '188'
+                },
+                codLengueje: {
+                    type: String,
+                    value: 'EN'
+                },
+                codError: String,
+                mensajeError: String,
+                url: String
+            },
+            _procesar: function() {
+                this.$$('dal-num-op-vpos')._procesar();
+            },
+            _controlarRespuestaNumOp: function() {
+                this.$$('rest-api')._procesar();
+            },
+            _controlarRespuestaIniciarVPOS: function(e, respIniciarVPOS) {
+                
+                console.log(respIniciarVPOS);
+                
+                this.codError = respIniciarVPOS.CodigoError;
+                this.mensajeError = respIniciarVPOS.MensajeError;
+                this.url = respIniciarVPOS.Url;
+                
+                if(this.codError=="00") {
+                    window.open(this.url, '_self');
+                }
+            }
+        });
+        
+    </script>
+</dom-module>

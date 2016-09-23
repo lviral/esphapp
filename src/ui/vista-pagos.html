@@ -1,18 +1,21 @@
 <link rel="import" href="../com/com-tipo-contrato.html">
 <link rel="import" href="../com/com-servicio-pendiente.html">
 <link rel="import" href="../com/com-tipos-id.html">
-<link rel="import" href="../com/com-num-op-vpos.html">
+<link rel="import" href="../com/dal-inicio-vpos.html">
+<link rel="import" href="../com/dal-tipo-contrato.html">
+<link rel="import" href="../com/dal-tipo-contrato-id.html">
 
 <dom-module id="vista-pagos">
 
   <template>
-
-    <style>
+      
+      <style include="shared-styles">
+          
       :host {
         display: block;
-        padding: 10px;
+        padding: 10px 0px 10px 0px;
       }
-
+          
       h1 {
         font-size: 22px;
         margin: 16px 0;
@@ -23,6 +26,10 @@
        display: table;
        width: 90%;
        margin: 0 auto;
+      }
+          
+      .divTableBottom {
+       display: table;
       }
       
       .divRow
@@ -35,18 +42,35 @@
        padding: 10px;
        vertical-align: middle;
       }
+          
+      #listaTipoContrato {
+          margin-top: 40px;
+      }
+          
+      #listaServiciosPendientes {
+          margin-top: 40px;
+          padding-bottom: 100px;
+      }
+      
     </style>
       
-        <div hidden$="{{vistaTipoContratoOculta}}">
+      <dal-tipo-contrato contrato={{contratoConsulta}} respuesta="{{resPorContrato}}" on-com-response="_controlarRespuestaTipoContrato">
+      </dal-tipo-contrato>
+      <dal-tipo-contrato-id num-id={{numIdConsulta}} tipo-id="{{tipoIdConsulta}}" on-com-response="_controlarRespuestaTipoContratoId">
+      </dal-tipo-contrato-id>
+      
+      <div hidden$="{{vistaTipoContratoOculta}}">
             <paper-radio-group selected="porContrato" on-paper-radio-group-changed="_controlarCambioTipoBusqueda">
                 <paper-radio-button name="porContrato">Por Contrato</paper-radio-button>
                 <paper-radio-button name="porId">Por Identificacion</paper-radio-button>
             </paper-radio-group>
+            <paper-toast  id="toastNohayContratos" text="Debe agregar al menos un contrato para continuar!" class="fit-bottom" style="text-align:center;"></paper-toast>
             <div hidden$="{{vistaBusquedaPorContratoOculta}}">
+                <paper-toast id="toastContratoNoExiste" class="fit-bottom" style="text-align:center;"></paper-toast>
                 <div class="divTable"> 
                     <div class="divRow">
                         <div class="divCell">
-                             <paper-input label='Contrato' value='{{txtContratoConsulta}}'></paper-input>
+                             <paper-input label='Contrato' value='{{txtContratoConsulta}}' type="number"></paper-input>
                         </div>
                         <div class="divCell">
                             <paper-fab icon="add" mini="true" on-click='_agregarTipoContrato'></paper-fab>
@@ -55,25 +79,47 @@
                 </div>
             </div>
             <div hidden$="{{vistaBusquedaPorIdOculta}}">
-                <com-tipos-id></com-tipos-id>
+                <paper-toast  id="toastIdNoExiste" class="fit-bottom" style="text-align:center;"></paper-toast>
+                <div class="divTable"> 
+                    <div class="divRow">
+                        <div class="divCell">
+                             <com-tipos-id num-id={{numId}} tipo-id="{{tipoId}}"></com-tipos-id>
+                        </div>
+                        <div class="divCell">
+                            <paper-fab icon="add" mini="true" on-click='_agregarTipoContratoId'></paper-fab>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
             <div id="listaTipoContrato">
             </div>
-            
-            <paper-fab icon="arrow-forward" mini="true" on-click='_mostrarVistaFacturas'></paper-fab>
+            <paper-fab style="position: fixed; right: 25px; bottom: 30px;"  icon="arrow-forward" on-click='_mostrarVistaFacturas'></paper-fab>
         </div>
-      
         <div hidden$="{{vistaFacturasOculta}}">
-            <paper-checkbox on-change="_controlarSeleccionarTodos">Seleccionar todos</paper-checkbox>
-                <div id="listaServiciosPendientes">
-                    <!--<com-num-op-vpos num-op-vpos="{{numOpVpos}}"></com-num-op-vpos>-->
-                    <com-servicio-pendiente contrato="5300" codigo-tipo-servicio="1"></com-servicio-pendiente>
+            <dal-inicio-vpos monto="{{montoPagar}}"></dal-inicio-vpos>
+            <paper-toast  id="toastMontoCero" text="Debe seleccionar al menos una factura a pagar!" class="fit-bottom" style="text-align:center;"></paper-toast>
+            <paper-checkbox on-change="_controlarSeleccionarTodos" checked={{seleccionarTodas}}>Seleccionar todos</paper-checkbox>
+            <div id="listaServiciosPendientes">
+                <!--<com-servicio-pendiente contrato="5300" codigo-tipo-servicio="1" on-cambio-monto-total="_actualizarMontoTotal"></com-servicio-pendiente>
+                <com-servicio-pendiente contrato="74552" codigo-tipo-servicio="2" on-cambio-monto-total="_actualizarMontoTotal"></com-servicio-pendiente>-->
+            </div>
+            
+            <paper-material elevation="1"  style="position:fixed; bottom:0px; width:100%; background-color:lightblue; height:100px;"> 
+                <div class="divTableBottom" style="position: fixed; right: 25px; bottom: 15px;"> 
+                    <div class="divRow">
+                        <div class="divCell">
+                             <paper-fab icon="arrow-back" on-click='_mostrarVistaTipoContrato'></paper-fab>
+                        </div>
+                        <div class="divCell">
+                             <spa>Monto total: ₡[[montoPagar]]</spa>
+                        </div>
+                        <div class="divCell">
+                            <paper-button id="btnPagar" on-click='_enviarDatosAVPOS' raised>Pagar</paper-button>
+                        </div>
+                    </div>
                 </div>
-            <paper-fab icon="arrow-back" mini="true" on-click='_mostrarVistaTipoContrato'></paper-fab>
-            <paper-fab icon="arrow-forward" mini="true" on-click='_enviarDatosAVPOS'></paper-fab>
+            </paper-material>
         </div>
-    
   </template>
 
   <script>
@@ -83,70 +129,118 @@
       is: 'vista-pagos',
         
       properties: {
-        vistaBusquedaPorContratoOculta: Boolean,
-        vistaBusquedaPorIdOculta: Boolean,
-        vistaTipoContratoOculta: Boolean,
-        vistaFacturasOculta: Boolean,
-        numOpVpos: String
+        vistaBusquedaPorContratoOculta: {
+            type: Boolean,
+            value: false
+        },
+        vistaBusquedaPorIdOculta: {
+            type: Boolean,
+            value: true
+        },
+        vistaTipoContratoOculta: {
+            type: Boolean,
+            value: false
+        },
+        vistaFacturasOculta: {
+            type: Boolean,
+            value: true
+        },
+        urlVPOS: {
+            type: String,
+            value: ''
+        },
+        montoPagar : {
+            type: Number,
+            value: 0
+        },
+        seleccionarTodas: {
+            type: Boolean,
+            value: false
+        }
       },
-        
-      ready: function() {
-          
-          this.vistaBusquedaPorContratoOculta = false;
-          this.vistaBusquedaPorIdOculta = true;
-          this.vistaTipoContratoOculta = false;
-          this.vistaFacturasOculta = true;
-      },
-      
       _agregarTipoContrato: function() {
-          var tipoContratoElem = document.createElement("com-tipo-contrato");
-          tipoContratoElem.setAttribute("contrato", this.txtContratoConsulta);
-          this.$.listaTipoContrato.appendChild(tipoContratoElem);  
+          this.contratoConsulta = this.txtContratoConsulta;
+          this.txtContratoConsulta = '';
       },
-        
+      _agregarTipoContratoId: function() {
+          this.numIdConsulta = this.numId;
+          this.tipoIdConsulta = this.tipoId;
+      },
+      _controlarRespuestaTipoContrato: function(e, data){
+          if(data.codigoTipoServicio == -1){
+              this.$.toastContratoNoExiste.text = "El contrato: " + data.contrato + " no existe!";
+              this.$.toastContratoNoExiste.open();
+          }
+          else
+          {
+              var tipoContratoElem = document.createElement('com-tipo-contrato');
+              tipoContratoElem.data = data;
+              this.$.listaTipoContrato.appendChild(tipoContratoElem);
+          }
+      },
+      _controlarRespuestaTipoContratoId: function(e, data){
+          if (typeof data[0] === 'undefined' || data[0] === null) {
+              this.$.toastIdNoExiste.text = "El número de identifiación: " + this.numId + " no corresponde a ningún abonado!";
+              this.$.toastIdNoExiste.open();
+          }
+          else{
+              data.forEach(tipoContrato => {
+                  this.numId = '';
+                  var tipoContratoElem = document.createElement("com-tipo-contrato");
+                  tipoContratoElem.data = tipoContrato;
+                  this.$.listaTipoContrato.appendChild(tipoContratoElem);
+              });
+          }
+      },
       _mostrarVistaFacturas: function() {
-          //if(this.listaContratos.length > 0) {
+          var listaContratos = Polymer.dom(this.$.listaTipoContrato).querySelectorAll('com-tipo-contrato');
+          if(listaContratos.length > 0) {
               this.vistaFacturasOculta= false;
               this.vistaTipoContratoOculta= true;
-          
-          
-              var listaContratos = Polymer.dom(this.$.listaTipoContrato).querySelectorAll('com-tipo-contrato');
-              listaContratos.forEach(function(tipoContrato){
-                  console.log(tipoContrato.contrato);
+              listaContratos.forEach(tipoContrato => {
+                  var elemServicioPendiente = document.createElement("com-servicio-pendiente");
+                  elemServicioPendiente.setAttribute("contrato", tipoContrato._getContrato());
+                  elemServicioPendiente.setAttribute("codigo-tipo-servicio", tipoContrato._getCodigo());
+                  elemServicioPendiente.addEventListener('cambio-monto-total', e => {
+                      if(e.detail.seleccionada)
+                          this.montoPagar += e.detail.monto;
+                      else
+                          this.montoPagar -= e.detail.monto;
+                  });
+                  this.$.listaServiciosPendientes.appendChild(elemServicioPendiente); 
               });
-          //    this.paramConsultarFacturasPendientes = this.listaTipoContrato;
-         // }
-        //  else {
-        //      this.$.toastNohayContratos.open();
-        //  }
+          }
+          else {
+              this.$.toastNohayContratos.open();
+          }
       },
-        
       _mostrarVistaTipoContrato: function() {
           this.vistaFacturasOculta= true;
           this.vistaTipoContratoOculta= false;
       },
-        
-      _controlarCambioTipoBusqueda: function(e) {
-          if(e.target.selected=='porContrato') {
-              this.vistaBusquedaPorContratoOculta = false;
-              this.vistaBusquedaPorIdOculta = true;
-          }
-          else {
-              this.vistaBusquedaPorContratoOculta = true;
-              this.vistaBusquedaPorIdOculta = false;
-          }
+      _controlarCambioTipoBusqueda: function() {
+          this.vistaBusquedaPorContratoOculta = !this.vistaBusquedaPorContratoOculta;
+          this.vistaBusquedaPorIdOculta = !this.vistaBusquedaPorIdOculta;
       },
-        
+      _actualizarMontoTotal: function(e, data) {
+          console.log(e);
+          if(data.seleccionada)
+            this.montoPagar += data.monto;
+          else
+            this.montoPagar -= data.monto;
+      },
       _enviarDatosAVPOS: function() {
-          
-          var elemNumOpVPOS = document.createElement('com-num-op-vpos');
-          numOpVpos.setAttribute('num-op-vpos', '[[numOpVpos]]');
-          this.$.listaServiciosPendientes.appendChild(elemNumOpVPOS);
-          console.log(this.numOpVpos);
+          if(this.montoPagar > 0)
+            this.$$('dal-inicio-vpos')._procesar();
+          else
+              this.$.toastMontoCero.open();
+      },
+      _controlarSeleccionarTodos: function() {
+          var listaServiciosPendientes = Polymer.dom(this.$.listaServiciosPendientes).querySelectorAll('com-servicio-pendiente');
+          listaServiciosPendientes.forEach(servicioPendiente => {
+              servicioPendiente._seleccionarTodasFacturas(this.seleccionarTodas);
+          });
       }
-     
     });
-
   </script>
-
 </dom-module>

@@ -1,18 +1,40 @@
-
 <dom-module id="com-factura-pendiente">
     <template>
         <style>
+          :root {
+            border-top: 1px solid grey;
+            border-bottom: 1px solid grey; 
+          }
+          .divTable {
+           display: table;
+          }
+          .divRow
+          {
+           display:table-row;
+          }
+
+          .divCell {
+           display:table-cell;
+           padding: 10px;
+           vertical-align: middle;
+           @apply(--paper-font-body1);
+          }
         </style>
-        <p>
-        <paper-checkbox on-change="_controlarCambioSeleccion"></paper-checkbox>
-        <span>{{codigoError}}</span>
-        <span>{{descripcionError}}</span>
-        <span>{{descripcionPeriodo}}</span>
-        <span>{{descripcionTipoFactura}}</span>
-        <span>{{fechaVencimiento}}</span>
-        <span>{{montoDeuda}}</span>
-        <span>{{numFactura}}</span>
-        </p>
+        
+        <div class="divTable"> 
+            <div class="divRow">
+                <div class="divCell">
+                     <paper-checkbox on-change="_controlarCambioSeleccion" checked={{seleccionada}}></paper-checkbox>
+                </div>
+                <div class="divCell">
+                    <div>Factura: {{numFactura}}</div>
+                    <div>Tipo: {{descripcionTipoFactura}}</div>
+                    <div>Periodo: {{descripcionPeriodo}}</div>
+                    <div>Fecha Vencimiento: {{fechaVencimiento}}</div>
+                    <div>Monto: {{montoDeuda}}</div>
+                </div>
+            </div>
+        </div>
     </template>
     <script>
         Polymer({
@@ -21,61 +43,70 @@
                 data: Object,
                 codigoError: {
                     type: String,
-                    computed: '_getCodigoError(data)'
+                    computed: '_setCodigoError(data)'
                 },
                 descripcionError: {
                     type: String,
-                    computed: '_getDescripcionError(data)'
+                    computed: '_setDescripcionError(data)'
                 },
                 descripcionPeriodo: {
                     type:String,
-                    computed: '_getDescripcionPeriodo(data)'
+                    computed: '_setDescripcionPeriodo(data)'
                 },
                 descripcionTipoFactura: {
                     type:String,
-                    computed: '_getDescripcionTipoFactura(data)'
+                    computed: '_setDescripcionTipoFactura(data)'
                 },
                 fechaVencimiento: {
                     type:String,
-                    computed: '_getFechaVencimiento(data)'
+                    computed: '_setFechaVencimiento(data)'
                 },
                 montoDeuda: {
                     type:String,
-                    computed: '_getMontoDeuda(data)'
+                    computed: '_setMontoDeuda(data)'
                 },
                 numFactura: {
                     type:String,
-                    computed: '_getNumFactura(data)'
+                    computed: '_setNumFactura(data)'
                 },
                 seleccionada: {
                     type: Boolean,
                     value: false
                 }
             },
-            _getCodigoError: function(data){
+            _setCodigoError: function(data){
                 return data.codigoError;
             },
-            _getDescripcionError: function(data){
+            _setDescripcionError: function(data){
                 return data.descripcionError;
             },
-            _getDescripcionPeriodo: function(data){
+            _setDescripcionPeriodo: function(data){
                 return data.descripcionPeriodo;
             },
-            _getDescripcionTipoFactura: function(data){
+            _setDescripcionTipoFactura: function(data){
                 return data.descripcionTipoFactura;
             },
-            _getFechaVencimiento: function(data){
+            _setFechaVencimiento: function(data){
                 return data.fechaVencimiento;
             },
-            _getMontoDeuda: function(data){
+            _setMontoDeuda: function(data){
                 return data.montoDeuda;
             },
-            _getNumFactura: function(data){
+            _setNumFactura: function(data){
                 return data.numeroSecuencia;
             },
             _controlarCambioSeleccion: function() {
-                this.seleccionada = this.$$('paper-checkbox').checked;
-                this.fire('custom-change');
+                var factura = {
+                    seleccionada: this.seleccionada,
+                    monto: this.montoDeuda
+                }
+                this.fire('custom-change', factura);
+            },
+            _seleccionar: function(data) {
+                if(this.seleccionada != data) {
+                    this.seleccionada = data;
+                    this._controlarCambioSeleccion();
+                }
             }
         });
     </script>

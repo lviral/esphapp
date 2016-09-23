@@ -1,0 +1,27 @@
+<link rel="import" href="../dal/rest-api.html">
+
+<dom-module id="dal-num-op-vpos">
+    <template>
+        <rest-api auto="false" endpoint="interno" query-string="ObtenerNumOperacionVPOS" respuesta="{{numOpVpos}}" 
+                  on-rest-response="_controlarRespuesta"></rest-api>
+    </template>
+    <script>
+        Polymer({
+            is: 'dal-num-op-vpos',
+            properties: {
+                numOpVpos: {
+                    type: String,
+                    notify: true
+                    
+                }
+            },
+            _procesar: function() {
+                this.$$('rest-api')._procesar();
+            },
+            _controlarRespuesta: function() {
+                this.fire('num-op-response');
+            }
+        });
+        
+    </script>
+</dom-module>

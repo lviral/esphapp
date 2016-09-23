@@ -3,7 +3,6 @@
 <dom-module id="rest-api">
     <template>
         <iron-ajax
-        auto
         url="[[url]]"
         handle-as="json"
         method="[[method]]"
@@ -40,7 +39,15 @@
                 body: {
                     type: String,
                     value: ''
+                },
+                auto: {
+                    type: String,
+                    value: "true"
                 }
+            },
+            ready: function() {
+                if(this.auto==="true")
+                    this.$$('iron-ajax').setAttribute('auto','');
             },
             _obtenerURL: function(){
                 var epKey;
@@ -57,11 +64,14 @@
                 }
                 
     
-                console.log(new Polymer.IronMetaQuery({key:epKey}).value + this.queryString);
+                //console.log(new Polymer.IronMetaQuery({key:epKey}).value + this.queryString);
                 return new Polymer.IronMetaQuery({key:epKey}).value + this.queryString;  
             },
             _handleResponse: function(){
-                console.log(this.respuesta);
+                this.fire('rest-response', this.respuesta);
+            },
+            _procesar: function() {
+                return this.$$('iron-ajax').generateRequest().response;
             }
         });
     </script>

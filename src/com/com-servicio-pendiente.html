@@ -5,23 +5,74 @@
     
     <template>
         <style>
+            .contenedor {
+                width: 90%;
+                margin: 0 auto;
+            }
+            .encabezado {
+                padding: 5px;
+            },
+            
+
+            :host[show] {
+              @apply(--layout-horizontal);
+              @apply(--layout-around-justified);
+              @apply(--layout-wrap);
+              height: 100%;
+              max-width: 1000px;
+              margin: 0 auto;
+              background-color: var(--paper-grey-50);
+              width: 100%;
+              margin-top: 50px;
+            }
+
+            paper-card {
+              /*max-width: 900px;
+              min-width: 400px;*/
+             
+            }
+            @media all and (min-width: 700px) {
+              :host[show] {
+                @apply(--layout-justified);
+              }
+              paper-card {
+                width: calc(50% - 100px);
+              }
+              paper-card + paper-card {
+                margin-left: 100px;
+              }
+            }
+
+            @media all and (min-width: 1200px) {
+              :host {
+                width: 90%;
+              }
+            }   
+
         </style>
         
         <rest-api query-string="ConsultarFacturasPendientes/{{contrato}}-{{codigoTipoServicio}},/{{codigoTipoBusqueda}}/{{codigoBusqueda}}" 
                   respuesta="{{respuesta}}"></rest-api>
         
-        <p>
-            <div style="border:1px solid blue;">
-            <span>{{contrato}}</span>
-            <span>{{identificacionCliente}}</span>
-            <span>{{nombreCliente}}</span>
-            <span>{{descripcionServicio}}</span>
-            </div>
-            <template is="dom-repeat" items="{{respuesta}}" as="factura">
-                <com-factura-pendiente data="{{factura}}" on-custom-change="_calcularTotal"></com-factura-pendiente>
-            </template>
-        </p>
-            
+        <div>
+            <paper-card style="width:100%; margin: 0 auto;">
+                <div class="encabezado">
+                    <div>Contrato: {{contrato}}</div>
+                    <template is="dom-if" if="{{nombreCliente}}">
+                        <div>Cliente: {{nombreCliente}}</div>
+                        <div>Tipo: {{descripcionServicio}}</div>
+                    </template>
+                </div>
+                <template is="dom-repeat" items="{{respuesta}}" as="factura">
+                    <template is="dom-if" if="{{nombreCliente}}">
+                        <com-factura-pendiente data="{{factura}}" on-custom-change="_calcularTotal"></com-factura-pendiente>
+                    </template>
+                    <template is="dom-if" if="{{!nombreCliente}}">
+                        <span>No tiene pendientes!</span>
+                    </template>
+                </template>
+            <paper-card>
+        </div>
     </template> 
 
   <script>
@@ -44,37 +95,47 @@
           },
           identificacionCliente: {
               type: String,
-              computed: '_getIdentificacionCliente(respuesta)'
+              computed: '_setIdentificacionCliente(respuesta)'
           },
           nombreCliente: {
               type: String,
-              computed: '_getNombreCliente(respuesta)'
+              computed: '_setNombreCliente(respuesta)'
           },
           descripcionServicio: {
               type: String,
-              computed: '_getDescripcionServicio(respuesta)'
+              computed: '_setDescripcionServicio(respuesta)'
           },
           montoTotal: {
               type: Number,
               value: 0
+          },
+          todasSeleccionadas: {
+              type: Boolean,
+              value: false
           }
       },
-      _getIdentificacionCliente: function(data){
+      _setIdentificacionCliente: function(data){
           return data[0].identificacion;
       },
-      _getNombreCliente: function(data){
+      _setNombreCliente: function(data){
           return data[0].nombreCliente;
       },
-      _getDescripcionServicio: function(data){
+      _setDescripcionServicio: function(data){
           return data[0].descripcionServicio;
       },
-      _calcularTotal: function(e){
-          if(e.target.seleccionada)
-            this.montoTotal += e.target.montoDeuda;
+      _calcularTotal: function(e, factura){
+          if(factura.seleccionada)
+            this.montoTotal += factura.monto;
           else
-            this.montoTotal -= e.target.montoDeuda;
-          
-          console.log(this.montoTotal);
+            this.montoTotal -= factura.monto;
+          this.fire('cambio-monto-total', factura);
+      },
+      _seleccionarTodasFacturas: function(data) {
+          var listaFacturas = Polymer.dom(this.root).querySelectorAll('com-factura-pendiente');
+          this.todasSeleccionadas = data;
+          listaFacturas.forEach(factura => {
+              factura._seleccionar(this.todasSeleccionadas);
+          });
       }
     });
 
