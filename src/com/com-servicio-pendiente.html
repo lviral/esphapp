@@ -4,137 +4,68 @@
 <dom-module id="com-servicio-pendiente">
     
     <template>
-        <style>
-            .contenedor {
-                width: 90%;
-                margin: 0 auto;
-            }
-            .encabezado {
-                padding: 5px;
-            },
-            
-
-            :host[show] {
-              @apply(--layout-horizontal);
-              @apply(--layout-around-justified);
-              @apply(--layout-wrap);
-              height: 100%;
-              max-width: 1000px;
-              margin: 0 auto;
-              background-color: var(--paper-grey-50);
-              width: 100%;
-              margin-top: 50px;
-            }
-
-            paper-card {
-              width:90%; 
-              margin: 0 auto;
-              display: block;
-              margin-top: 10px; 
-             
-            }
-           /* @media all and (min-width: 700px) {
-              :host[show] {
-                @apply(--layout-justified);
-              }
-              paper-card {
-                width: calc(50% - 100px);
-              }
-              paper-card + paper-card {
-                margin-left: 100px;
-              }
-            }
-
-            @media all and (min-width: 1200px) {
-              :host {
-                width: 90%;
-              }
-            }   */
-            
-            .divTableHeader {
-             display: table;
-            }
-            .divRow
-            {
-             display:table-row;
-            }
-            .divCell {
-             display:table-cell;
-             padding: 10px;
-             vertical-align: middle;
-             @apply(--paper-font-body1);
-            }
-            .avatar:not([style-scope]):not(.style-scope) {
-                display: inline-block;
-                box-sizing: border-box;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                /*background: #ffc107;*/
-                cursor: pointer;
-                left:10px;
-            }
-            .agua:not([style-scope]):not(.style-scope) {
-                background-image: url('../../images/water-drop.png');
-            }
-            .ener:not([style-scope]):not(.style-scope) {
-                background-image: url('../../images/thunderbold.png');
-            }
-            .tele:not([style-scope]):not(.style-scope) {
-                background-image: url('../../images/thunderbold.png');
-            }
-            
-            
-            .azul {
-                color: #1c5a7d;
-            }
-            .naranja {
-                color: #e75300;
-            }
-            .amarillo {
-                color: yellow;
-            },
-            .gris {
-                color: grey;
-            }
-        </style>
-        
-        <rest-api query-string="ConsultarFacturasPendientes/{{contrato}}-{{codigoTipoServicio}},/{{codigoTipoBusqueda}}/{{codigoBusqueda}}" 
-                  respuesta="{{respuesta}}"></rest-api>
-        
-        <div>
-            <paper-card>
-                <div class="encabezado" class$="{{color}}">
-                    
-                    <div class="divTableHeader"> 
-                        <div class="divRow">
-                            <template is="dom-if" if="{{nombreCliente}}">
-                                <div class="divCell">
-                                    <div id="avatarServicio" class$="{{avatar}}" item-icon></div>
-                                </div>
-                            </template>
-                            <div class="divCell">
-                                <div>Contrato: {{contrato}}</div>
-                                <template is="dom-if" if="{{nombreCliente}}">
-                                    <div>Cliente: {{nombreCliente}}</div>
-                                    <div>Tipo: {{descripcionServicio}}</div>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <template is="dom-repeat" items="{{respuesta}}" as="factura">
+       <style include="shared-styles">
+           paper-card {
+               width: 100%;
+           }
+          .encabezado {
+            padding: 5px;
+          }
+          .azul {
+            color: #1c5a7d;
+          }
+          .naranja {
+            color: #e75300;
+          }
+          .amarillo {
+              color: yellow;
+          },
+          .gris {
+            color: grey;
+          }
+           .avatar {
+               width: 10%;
+               text-align: center;
+           }
+           .contenido {
+               width: 90%;
+           }
+           span {
+               padding: 10px;
+               color: #763918;
+           }
+       </style>
+       <rest-api query-string="ConsultarFacturasPendientes/{{contrato}}-{{codigoTipoServicio}},/{{codigoTipoBusqueda}}/{{codigoBusqueda}}" 
+          respuesta="{{respuesta}}"></rest-api>
+       <paper-card>
+           <div class="encabezado" class$="{{color}}">
+              <div class="divTable">
+                 <div class="divRow">
                     <template is="dom-if" if="{{nombreCliente}}">
-                        <com-factura-pendiente data="{{factura}}" on-custom-change="_calcularTotal"></com-factura-pendiente>
+                       <div class="divCell avatar">
+                          <div id="avatarServicio" class$="{{avatar}}" item-icon></div>
+                       </div>
                     </template>
-                    <template is="dom-if" if="{{!nombreCliente}}">
-                        <span>No tiene pendientes!</span>
-                    </template>
-                </template>
-            <paper-card>
-        </div>
-    </template> 
+                    <div class="divCell contenido">
+                       <div>Contrato: {{contrato}}</div>
+                       <template is="dom-if" if="{{nombreCliente}}">
+                          <div>Cliente: {{nombreCliente}}</div>
+                          <div>Tipo: {{descripcionServicio}}</div>
+                       </template>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <template is="dom-repeat" items="{{respuesta}}" as="factura">
+              <template is="dom-if" if="{{nombreCliente}}">
+                 <com-factura-pendiente data="{{factura}}" on-custom-change="_calcularTotal"></com-factura-pendiente>
+              </template>
+              <template is="dom-if" if="{{!nombreCliente}}">
+                 <span>No tiene pendientes!</span>
+              </template>
+           </template>
+       </paper-card>
+    </template>
 
   <script>
 
@@ -196,11 +127,11 @@
           var circulo= 'avatar';
           switch(data[0].descripcionServicio) {
               case 'AGUA':
-                  return circulo + ' agua';
+                  return 'avatarServicio iconAgua';
               case 'ENERGIA':
-                  return circulo + ' ener';
+                  return 'avatarServicio iconEner';
               default:
-                  return circulo + ' tele';
+                  return 'avatarServicio iconTele';
           }
       },
       _setColor: function(data){

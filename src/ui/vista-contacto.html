@@ -1,25 +1,42 @@
 <link rel="import" href="../com/form-contacto.html">
-
 <dom-module id="vista-contacto">
-
-  <template>
-
-    <style>
-      :host {
-        display: block;
-        padding: 10px;
-      }
+    <style include="shared-styles">
+        paper-fab {
+            margin: 0 auto;
+        }
+        form-contacto {
+            margin-top: 50px;
+        }
     </style>
-      
-    <form-contacto></form-contacto>
-  </template>
-
-  <script>
-
-    Polymer({
-      is: 'vista-contacto'
-    });
-
-  </script>
-
+    <template>
+        
+        <div class="divTable">
+            <div class="divRow">
+                <div class="divCell">
+                    <paper-fab on-click="_abrirFacebook" src="../../images/facebook-logo.png"></paper-fab>
+                </div>
+                <div class="divCell">
+                    <paper-fab on-click="_abrirMail" icon="communication:email"></paper-fab>
+                </div>
+                <div class="divCell">
+                    <paper-fab on-click="_abrirTelefono" icon="communication:phone"></paper-fab>
+                </div>
+            </div>
+        </div>
+        <form-contacto></form-contacto>
+    </template>
+    <script>
+        Polymer({
+            is: 'vista-contacto',
+            _abrirFacebook: function() {
+                window.open('https://www.facebook.com/esph.heredia/');
+            },
+            _abrirMail: function() {
+                window.location.href = 'mailto:info@esph-sa.com';
+            },
+            _abrirTelefono: function() {
+                window.location.href = 'tel:25623774';
+            }
+        });
+    </script>
 </dom-module>

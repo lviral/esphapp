@@ -1,4 +1,9 @@
 <dom-module id="com-tipos-id">
+    <style>
+        paper-dropdown-menu-light {
+            width: 100%;
+        }
+    </style>
     <template>
         <rest-api query-string="ConsultarTiposIdentificacion" respuesta="{{respuesta}}" on-rest-response="_controlarRespuesta"></rest-api>
         <paper-dropdown-menu-light label="Tipos Identificación">

@@ -1,29 +1,28 @@
 <dom-module id="com-factura-pendiente">
     <template>
-        <style>
-          .divTable {
-           display: table;
-           border-top: 1px solid grey;
-          }
-          .divRow
-          {
-           display:table-row;
-          }
-
-          .divCell {
-           display:table-cell;
-           padding: 10px;
-           vertical-align: middle;
-           @apply(--paper-font-body1);
-          }
+        <style include="shared-styles">
+            :host {
+                width: 100%;
+                padding: 0px;
+            }
+            .divTable {
+                border-top: 1px solid gray;
+            }
+            .avatar {
+                width: 10%;
+                text-align: center;
+            }
+            .contenido {
+                width: 90%;
+            }
         </style>
         
         <div class="divTable"> 
             <div class="divRow">
-                <div class="divCell">
+                <div class="divCell avatar">
                      <paper-checkbox on-change="_controlarCambioSeleccion" checked={{seleccionada}}></paper-checkbox>
                 </div>
-                <div class="divCell">
+                <div class="divCell contenido">
                     <div>Factura: {{numFactura}}</div>
                     <div>Tipo: {{descripcionTipoFactura}}</div>
                     <div>Periodo: {{descripcionPeriodo}}</div>

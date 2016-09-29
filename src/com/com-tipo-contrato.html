@@ -1,44 +1,23 @@
 <dom-module id="com-tipo-contrato">
     <template>
         <style include="shared-styles">
-            :host {
-                display: block;
-                border-top: 1px solid lightgray;
-                border-bottom: 1px solid lightgray;
-                padding: 5px;
-            }
-            .avatar:not([style-scope]):not(.style-scope) {
-                display: inline-block;
-                box-sizing: border-box;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                /*background: #ffc107;*/
-                cursor: pointer;
-                left:10px;
-            }
-            .blue:not([style-scope]):not(.style-scope) {
-                background-image: url('../../images/water-drop.png');
-            }
-            .orange:not([style-scope]):not(.style-scope) {
-                background-image: url('../../images/thunderbold.png');
-            }
-            .yellow:not([style-scope]):not(.style-scope) {
-                background-color: var(--paper-yellow-500);
+            paper-item-body {
+                width: 90%;
             }
             .textoSecundario {
                 @apply(--paper-font-caption);
             }
         </style>
+        <paper-material elevation="2">
             <paper-icon-item>
-                <div id="avatarServicio" class$="{{color}}" item-icon></div>
-                <paper-item-body two-line style="width: 70%;">
+                <div  class$="{{color}}" item-icon></div>
+                <paper-item-body two-line>
                   <div>{{contrato}}</div>
                   <div secondary class="textoSecundario">{{nombreCliente}}</div>
                 </paper-item-body>
-                <paper-icon-button style="float:right;" icon="delete" on-click="_controlarClick"></paper-icon-button>
+                <paper-icon-button icon="delete" on-click="_controlarClick"></paper-icon-button>
             </paper-icon-item>
-            <paper-tooltip for="avatarServicio" offset="0">{{descripcion}}</paper-tooltip>
+        </paper-material>
     </template>
     <script>
         Polymer({
@@ -79,14 +58,13 @@
                 return data.tipoServicio;
             },
             _setColor: function(data){
-                var circulo= 'avatar';
                 switch(data.codigoTipoServicio) {
                     case 1:
-                        return circulo + ' blue';
+                        return 'avatarServicio iconAgua';
                     case 2:
-                        return circulo + ' orange';
+                        return 'avatarServicio iconEner';
                     default:
-                        return circulo + ' yellow';
+                        return 'avatarServicio iconTele';
                 }
             },
             _getContrato: function(){

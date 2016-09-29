@@ -1,18 +1,72 @@
 <dom-module id="shared-styles">
   <template>
     <style>
-      :root {
-        --paper-fab-background:#95d600;
-        --paper-fab-keyboard-focus-background: #77881C;
-      }
-      /*paper-fab 
-      {
-        background-color: #95d600;
-      }*/
-      paper-icon-button
-      {
-          color: dimgrey;
-      }
+        :root {
+            --paper-fab-background:#95d600;
+            --paper-fab-keyboard-focus-background: #77881C;
+            --paper-radio-button-checked-color: #00a1df;
+            --paper-checkbox-checked-color: #00a1df;
+            --paper-input-container-focus-color: #00a1df;
+        }
+        :host {
+            display: block;
+            padding: 5px;
+            width: 90%;
+            margin: 0 auto;
+        }
+        paper-icon-button
+        {
+            color: dimgrey;
+        }
+        paper-button {
+            background: #e75300;
+            color: white;
+        }
+        paper-toast {
+            text-align: center;
+        }
+        .avatarServicio {
+            display: inline-block;
+            box-sizing: border-box;
+            width: 40px;
+            height: 40px;
+            left:10px;
+        }
+        .iconAgua {
+            background-image: url('../../images/water-drop.png');
+        }
+        .iconEner {
+            background-image: url('../../images/thunderbold.png');
+        }
+        .iconTele {
+            background-image: url('../../images/thunderbold.png');
+        }
+        .contenedorForm {
+            padding:20px;
+        }
+        .contenedorBotonesForm {
+            margin-top:20px;
+        }
+        .inferior {
+            position: fixed; 
+            right: 25px; 
+            bottom: 30px;
+        }
+        .divTable {
+            display: table;
+            /*border-top: 1px solid grey;*/
+            width: 100%;
+        }
+        .divRow
+        {
+            display:table-row;
+        }
+        .divCell {
+            display:table-cell;
+            padding: 10px;
+            vertical-align: middle;
+            @apply(--paper-font-body1);
+        }
     </style>
   </template>
 </dom-module>

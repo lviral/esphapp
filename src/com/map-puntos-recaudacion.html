@@ -1,9 +1,8 @@
-<link rel="import" href="geo-location.html">
+<link rel="import" href="map-geo-location.html">
 <dom-module id="map-puntos-recaudacion">
     <template>
-        holis!!!
         <div style="width:100%; height:500px;">
-          <geo-location latitude="{{lat}}" longitude="{{lng}}"></geo-location>          
+          <map-geo-location latitude="{{lat}}" longitude="{{lng}}"></map-geo-location>          
           <google-map-search map="[[map]]" query="Mas X Menos" results="{{resultsMasXMenos}}"></google-map-search>
           <google-map-search map="[[map]]" query="DAVIVIENDA" results="{{resultsDavivienda}}"></google-map-search>
           <google-map-search map="[[map]]" query="Farmaia Fischel" results="{{resultsFischel}}"></google-map-search>
@@ -38,9 +37,6 @@
         Polymer({
             is: 'map-puntos-recaudacion',
             properties: {
-            },
-            ready: function() {
-                console.log(this.results);
             }
         });
     </script>

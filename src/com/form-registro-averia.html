@@ -2,44 +2,46 @@
 
 <dom-module id="form-registro-averia">
     <template>
-        
-        <rest-api query-string="RegistrarAveria" body="{{parametros}}" respuesta="{{respuesta}}" method="POST"></rest-api>
-        
-        <div style="width:70%; margin: 0 auto;">
-            <form is="iron-form" method="get" action="/" id="formAveria">
-                <paper-dropdown-menu label="Tipos averías" name="Tipo"  required>
-                    <paper-listbox class="dropdown-content" selected="0">
-                        <paper-item value="AVECUE">Avería acueductos</paper-item>
-                        <paper-item value="AVEALC">Avería alcantarillado</paper-item>
-                        <paper-item value="AVENER">Avería energía</paper-item>
-                        <paper-item value="AVEALP">Avería alumbrado</paper-item>
-                    </paper-listbox>
-                </paper-dropdown-menu>
-                <paper-textarea name="Problema" label="Daño o problema" required></paper-textarea>
-                <paper-input name="Reporta" label="Nombre completo" required></paper-input>
-                <paper-input name="Telefono" label="Número de teléfono" required></paper-input>
-                <gold-email-input name="Email" label="Email" required></gold-email-input>
-                <paper-textarea name="Direccion" label="Dirección exacta" required></paper-textarea>
-                <input type="hidden" name="Contrato" value="">
-                <input type="hidden" name="Medidor" value="0">
-                <input type="hidden" name="Identificacion" value="0">
-                <input type="hidden" name="TipoCausa" value="0">
-                <paper-button id="btnEnviar" raised>Enviar</paper-button>
-                <paper-button id="btnLimpiar" raised>Limpiar</paper-button>
-            </form>
-            <paper-dialog id="dialogExito">
-                <p>Se ha registrado la avería con éxito!</p>
-                <div class="buttons">
-                    <paper-button dialog-confirm autofocus>Cerrar</paper-button>
-                </div>
-            </paper-dialog>
-            <paper-dialog id="dialogError">
-                <p>Se ha presentado un error al registrar la averia!</p>
-                <div class="buttons">
-                    <paper-button dialog-confirm autofocus>Cerrar</paper-button>
-                </div>
-            </paper-dialog>
-        </div>
+       <style include="shared-styles">
+       </style>
+       <rest-api query-string="RegistrarAveria" body="{{parametros}}" respuesta="{{respuesta}}" method="POST"></rest-api>
+       <paper-material elevation="2" class="contenedorForm">
+          <form is="iron-form" method="get" action="/" id="formAveria">
+             <paper-dropdown-menu label="Tipos averías" name="Tipo"  required>
+                <paper-listbox class="dropdown-content" selected="0">
+                   <paper-item value="AVECUE">Avería acueductos</paper-item>
+                   <paper-item value="AVEALC">Avería alcantarillado</paper-item>
+                   <paper-item value="AVENER">Avería energía</paper-item>
+                   <paper-item value="AVEALP">Avería alumbrado</paper-item>
+                </paper-listbox>
+             </paper-dropdown-menu>
+             <paper-textarea name="Problema" label="Daño o problema" required></paper-textarea>
+             <paper-input name="Reporta" label="Nombre completo" required></paper-input>
+             <paper-input name="Telefono" label="Número de teléfono" required></paper-input>
+             <gold-email-input name="Email" label="Email" required></gold-email-input>
+             <paper-textarea name="Direccion" label="Dirección exacta" required></paper-textarea>
+             <input type="hidden" name="Contrato" value="">
+             <input type="hidden" name="Medidor" value="0">
+             <input type="hidden" name="Identificacion" value="0">
+             <input type="hidden" name="TipoCausa" value="0">
+          </form>
+       </paper-material>
+       <div class="contenedorBotonesForm">
+          <paper-button id="btnEnviar" raised>Enviar</paper-button>
+          <paper-button id="btnLimpiar" raised>Limpiar</paper-button>
+       </div>
+       <paper-dialog id="dialogExito">
+          <p>Se ha registrado la avería con éxito!</p>
+          <div class="buttons">
+             <paper-button dialog-confirm autofocus>Cerrar</paper-button>
+          </div>
+       </paper-dialog>
+       <paper-dialog id="dialogError">
+          <p>Se ha presentado un error al registrar la averia!</p>
+          <div class="buttons">
+             <paper-button dialog-confirm autofocus>Cerrar</paper-button>
+          </div>
+       </paper-dialog>
     </template>
     <script>
         Polymer({

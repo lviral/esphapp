@@ -1,32 +1,32 @@
 <dom-module id="form-contacto">
     <template>
-                
-        <rest-api query-string="ContactoCorreo" body="{{parametros}}" respuesta="{{respuesta}}" method="POST"></rest-api>
-        
-        
-        <div style="width:70%; margin: 0 auto;">
-            <form is="iron-form" method="get" action="/" id="formContacto">
-               
-                <paper-input name="Nombre  " label="Nombre completo" required></paper-input>
-                <paper-input name="Telefono" label="Teléfono" required></paper-input>
-                <gold-email-input name="Email" label="Email" required></gold-email-input>
-                <paper-textarea name="Comentario" label="Comentario o sugerencia" required></paper-textarea>
-                <paper-button id="btnEnviar" raised>Enviar</paper-button>
-                <paper-button id="btnLimpiar" raised>Limpiar</paper-button>
-            </form>
-            <paper-dialog id="dialogExito">
-                <p>Se ha registrado el comentario o sugerencia con éxito!</p>
-                <div class="buttons">
-                    <paper-button dialog-confirm autofocus>Cerrar</paper-button>
-                </div>
-            </paper-dialog>
-            <paper-dialog id="dialogError">
-                <p>Se ha presentado un error al registrar el comentario o sugerencia!</p>
-                <div class="buttons">
-                    <paper-button dialog-confirm autofocus>Cerrar</paper-button>
-                </div>
-            </paper-dialog>
-        </div>
+       <style include="shared-styles">
+       </style>
+       <rest-api query-string="ContactoCorreo" body="{{parametros}}" respuesta="{{respuesta}}" method="POST"></rest-api>
+       <paper-material elevation="2" class="contenedorForm">
+          <form is="iron-form" method="get" action="/" id="formContacto">
+             <paper-input name="Nombre  " label="Nombre completo" required></paper-input>
+             <paper-input name="Telefono" label="Teléfono" required></paper-input>
+             <gold-email-input name="Email" label="Email" required></gold-email-input>
+             <paper-textarea name="Comentario" label="Comentario o sugerencia" required></paper-textarea>
+          </form>
+       </paper-material>
+       <div class="contenedorBotonesForm">
+          <paper-button id="btnEnviar" raised>Enviar</paper-button>
+          <paper-button id="btnLimpiar" raised>Limpiar</paper-button>
+       </div>
+       <paper-dialog id="dialogExito">
+          <p>Se ha registrado el comentario o sugerencia con éxito!</p>
+          <div class="buttons">
+             <paper-button dialog-confirm autofocus>Cerrar</paper-button>
+          </div>
+       </paper-dialog>
+       <paper-dialog id="dialogError">
+          <p>Se ha presentado un error al registrar el comentario o sugerencia!</p>
+          <div class="buttons">
+             <paper-button dialog-confirm autofocus>Cerrar</paper-button>
+          </div>
+       </paper-dialog>
     </template>
     <script>
         Polymer({

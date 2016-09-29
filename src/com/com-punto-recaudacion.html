@@ -1,6 +1,13 @@
 <dom-module id="com-punto-recaudacion">
     <template>
-        <paper-item>{{nombre}}</paper-item>
+        <style>
+            paper-material {
+                margin-top: 5px;
+            }
+        </style>
+        <paper-material elevation="2">
+            <paper-item>{{nombre}}</paper-item>
+        </paper-material>
     </template>
     <script>
         Polymer({
