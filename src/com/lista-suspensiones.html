@@ -1,0 +1,17 @@
+<link rel="import" href="com-suspension.html">
+<dom-module id="lista-suspensiones">
+    <template>
+        <rest-api endpoint="drupal" query-string="suspenciones.json" respuesta="{{respuesta}}"></rest-api>
+        <template is="dom-repeat" items="{{respuesta}}" as="suspension">
+            <com-suspension data="{{suspension}}"></com-suspension>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: 'lista-suspensiones',
+            properties: {
+                respuesta: Object
+            }
+        });
+    </script>
+</dom-module>

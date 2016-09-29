@@ -1,0 +1,87 @@
+<dom-module id="com-suspension">
+    <template>
+        <style include="shared-styles">
+            paper-material {
+                margin-top: 5px;
+            }
+            .encabezado {
+                border-bottom: 1px solid gray;
+            }
+            div {
+                padding: 10px;
+            }
+        </style>
+        <paper-material elevation="2">
+            <div class="encabezado"><span id="avatarServicio" class$="{{avatar}}" item-icon></span>{{servicio}}</div>
+            <div><b>Comunicación:</b>&nbsp; [[comunicacion]]</div>
+            <div><b>Fecha:</b>&nbsp; [[fecha]]</div>
+            <div><b>Hora:</b>&nbsp; [[horario]]</div>
+            <div><b>Lugares afectados:</b>&nbsp; [[lugares]]</div>
+            <div><b>Motivo:</b>&nbsp; [[motivo]]</div>
+        </paper-material>
+    </template>
+    <script>
+        Polymer({
+            is: 'com-suspension',
+            properties: {
+                data: Object,
+                servicio: {
+                    type: String,
+                    computed: '_setServicio(data)'
+                },
+                comunicacion: {
+                    type: String,
+                    computed: '_setComunicacion(data)'
+                },
+                fecha: {
+                    type: String,
+                    computed: '_setFecha(data)'
+                },
+                horario: {
+                    type: String,
+                    computed: '_setHorario(data)'
+                },
+                lugares: {
+                    type: String,
+                    computed: '_setLugares(data)'
+                },
+                motivo: {
+                    type: String,
+                    computed: '_setMotivo(data)'
+                },
+                avatar: {
+                    type: String,
+                    computed: '_setAvatar(data)'
+                }
+            },
+            _setServicio: function(data) {
+                return data.Servicio;
+            },
+            _setComunicacion: function(data) {
+                return data.Comunicacion;
+            },
+            _setFecha: function(data) {
+                return data.Fecha.substring(data.Fecha.indexOf('>')+1,data.Fecha.lastIndexOf("<"));
+            },
+            _setHorario: function(data) {
+                return data.Horario;
+            },
+            _setLugares: function(data) {
+                return data['Lugares Afectados'];
+            },
+            _setMotivo: function(data) {
+                return data.Motivo;
+            },
+            _setAvatar: function(data){
+                switch(data.Servicio) {
+                    case 'Agua Potable':
+                        return 'avatarServicio iconAgua';
+                    case 'Energía Eléctrica':
+                        return 'avatarServicio iconEner';
+                    default:
+                        return 'avatarServicio iconTele';
+                }
+            }
+        });
+    </script>
+</dom-module>
