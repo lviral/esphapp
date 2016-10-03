@@ -17,17 +17,38 @@
             }
         </style>
         
+        <iron-media-query query="(min-width: 430px)" query-matches="{{esAlMenos430px}}"></iron-media-query>
+        
         <div class="divTable"> 
             <div class="divRow">
                 <div class="divCell avatar">
                      <paper-checkbox on-change="_controlarCambioSeleccion" checked={{seleccionada}}></paper-checkbox>
                 </div>
                 <div class="divCell contenido">
-                    <div>Factura: {{numFactura}}</div>
+                    
+                    <lavu-grid>
+                        <lavu-cell span="4">
+                            Factura<template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                            <span class="textoGris">{{numFactura}}</span>
+                        </lavu-cell>
+                      <lavu-cell span="4">
+                          Tipo<template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                          <span class="textoGris">{{descripcionTipoFactura}}</span>
+                      </lavu-cell>
+                      <lavu-cell span="4">
+                          Periodo<template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                          <span class="textoGris">{{descripcionPeriodo}}</span>
+                        </lavu-cell>
+                      <lavu-cell span="4">
+                          <span class="textoAzul">Vencimiento: {{fechaVencimiento}}</span><br> <span class="textoNaranja">₡{{montoDeuda}}</span>
+                        </lavu-cell>
+                    </lavu-grid>
+                    
+                    <!--<div>Factura: {{numFactura}}</div>
                     <div>Tipo: {{descripcionTipoFactura}}</div>
                     <div>Periodo: {{descripcionPeriodo}}</div>
                     <div>Fecha Vencimiento: {{fechaVencimiento}}</div>
-                    <div>Monto: {{montoDeuda}}</div>
+                    <div>Monto: {{montoDeuda}}</div>-->
                 </div>
             </div>
         </div>
@@ -83,7 +104,7 @@
                 return data.descripcionTipoFactura;
             },
             _setFechaVencimiento: function(data){
-                return data.fechaVencimiento;
+                return data.fechaVencimiento.substring(0,8);
             },
             _setMontoDeuda: function(data){
                 return data.montoDeuda;

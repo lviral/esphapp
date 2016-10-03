@@ -38,7 +38,7 @@
        <rest-api query-string="ConsultarFacturasPendientes/{{contrato}}-{{codigoTipoServicio}},/{{codigoTipoBusqueda}}/{{codigoBusqueda}}" 
           respuesta="{{respuesta}}"></rest-api>
        <paper-card>
-           <div class="encabezado" class$="{{color}}">
+           <div class="encabezado">
               <div class="divTable">
                  <div class="divRow">
                     <template is="dom-if" if="{{nombreCliente}}">
@@ -50,7 +50,7 @@
                        <div>Contrato: {{contrato}}</div>
                        <template is="dom-if" if="{{nombreCliente}}">
                           <div>Cliente: {{nombreCliente}}</div>
-                          <div>Tipo: {{descripcionServicio}}</div>
+                          <!--<div>Tipo: {{descripcionServicio}}</div>-->
                        </template>
                     </div>
                  </div>
