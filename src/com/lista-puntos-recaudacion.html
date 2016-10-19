@@ -2,15 +2,36 @@
 <dom-module id="lista-puntos-recaudacion">
     <template>
         <rest-api endpoint="drupal" query-string="views/recaudadores.json" respuesta="{{respuesta}}"></rest-api>
-        <template is="dom-repeat" items="{{respuesta}}" as="recaudador">
-            <com-punto-recaudacion data="{{recaudador}}"></com-punto-recaudacion>
+        
+        
+         <lavu-grid>
+        <template is="dom-repeat" items="{{respuesta}}" as="recaudador" index-as="indice">
+            <!--<template is="dom-if" if="{{_indicePar(indice)}}">
+            {{indice}}
+            </template>-->
+            
+           
+                        <lavu-cell span="8">
+                            <com-punto-recaudacion data="{{recaudador}}"></com-punto-recaudacion>
+                        </lavu-cell>
         </template>
+        </lavu-grid>
     </template>
     <script>
         Polymer({
             is: 'lista-puntos-recaudacion',
             properties: {
                 respuesta: Object
+            },
+            _indicePar: function(data) {
+                
+                console.log(data);
+                
+                if(data === 0)
+                    return true;
+                if(data%2 === 0)
+                    return true;
+                return false;
             }
         });
     </script>
