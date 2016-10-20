@@ -1,0 +1,49 @@
+<link rel="import" href="com-pago-contrato.html">
+<dom-module id="lista-pagos-contrato">
+    
+    <style include="shared-styles">
+        :host {
+            width: 100%;
+        }
+        paper-material {
+            padding: 25px;
+        }
+    </style>
+    
+    <template>
+        <rest-api endpoint="interno" query-string="ListarPagosContrato/{{contratoConsulta}}" respuesta="{{respuesta}}"></rest-api>
+        
+        <iron-media-query query="(min-width: 1024px)" query-matches="{{esAlMenosA1024px}}"></iron-media-query>
+
+        <paper-material elevation="2">
+            <template is="dom-if" if="{{esAlMenosA1024px}}">
+                <lavu-grid>
+                    <lavu-cell span="4">
+                        Factura
+                    </lavu-cell>
+                    <lavu-cell span="4">
+                        Periodo/Fecha
+                    </lavu-cell>
+                    <lavu-cell span="2">
+                        Monto
+                    </lavu-cell>
+                    <lavu-cell span="6">
+                        Lugar
+                    </lavu-cell>
+                </lavu-grid>
+            </template> 
+            <template is="dom-repeat" items="{{respuesta}}" as="pago">
+                <com-pago-contrato data="{{pago}}"></com-pago-contrato>
+            </template>
+        </paper-material>
+    </template>
+    <script>
+        Polymer({
+            is: 'lista-pagos-contrato',
+            properties: {
+                respuesta: Object,
+                contratoConsulta: String
+            }
+        });
+    </script>
+</dom-module>

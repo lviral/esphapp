@@ -1,0 +1,49 @@
+<link rel="import" href="com-consumo-contrato.html">
+<dom-module id="lista-consumos-contrato">
+    
+    <style include="shared-styles">
+        :host {
+            width: 100%;
+        }
+        paper-material {
+            padding: 25px;
+        }
+    </style>
+    
+    <template>
+        
+        <rest-api endpoint="interno" query-string="ListarConsumosContrato/{{contratoConsulta}}/{{anioConsulta}}" respuesta="{{respuesta}}">
+        </rest-api>
+        
+        <iron-media-query query="(min-width: 1024px)" query-matches="{{esAlMenosA1024px}}"></iron-media-query>
+
+        <paper-material elevation="2">
+            <template is="dom-if" if="{{esAlMenosA1024px}}">
+                <lavu-grid>
+                    <lavu-cell span="6">
+                        Periodo
+                    </lavu-cell>
+                    <lavu-cell span="6">
+                        Fecha
+                    </lavu-cell>
+                    <lavu-cell span="4">
+                        Valor
+                    </lavu-cell>
+                </lavu-grid>
+            </template> 
+            <template is="dom-repeat" items="{{respuesta}}" as="consumo">
+                <com-consumo-contrato data="{{consumo}}"></com-consumo-contrato>
+            </template>
+        </paper-material>
+    </template>
+    <script>
+        Polymer({
+            is: 'lista-consumos-contrato',
+            properties: {
+                respuesta: Object,
+                contratoConsulta: String,
+                anioConsulta: String
+            }
+        });
+    </script>
+</dom-module>

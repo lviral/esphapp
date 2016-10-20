@@ -1,0 +1,46 @@
+<link rel="import" href="../com/lista-pagos-contrato.html">
+
+<dom-module id="vista-pagos-contrato">
+
+  <template>
+
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+        }
+        lista-pagos-contrato {
+            margin-top:40px;
+        }
+    </style>
+    <paper-material  elevation="2">
+        <div class="divTable">
+          <div class="divRow">
+             <div class="divCell filtrosBusqueda" style="width:95%;">
+                <paper-input label='Contrato' value='{{txtContratoConsulta}}' type="number"></paper-input>
+             </div>
+             <div class="divCell">
+                <paper-fab icon="add" mini="true" on-click='_agregarTipoContrato'></paper-fab>
+             </div>
+          </div>
+        </div>
+      </paper-material>
+    <lista-pagos-contrato contrato-consulta="{{contratoConsulta}}"></lista-pagos-contrato>
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'vista-pagos-contrato',
+      properties: {
+        contratoConsulta: String
+      },
+      _agregarTipoContrato: function() {
+          this.contratoConsulta = this.txtContratoConsulta;
+          this.txtContratoConsulta = '';
+      }
+    });
+
+  </script>
+
+</dom-module>

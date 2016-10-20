@@ -1,0 +1,99 @@
+<dom-module id="com-pago-contrato">
+    <template>
+        <style include="shared-styles">
+            :host {
+                width: 100%;
+                padding: 0px;
+            }
+            .divTable {
+                border-top: 1px solid gray;
+            }
+            .avatar {
+                width: 10%;
+                text-align: center;
+            }
+            .contenido {
+                width: 90%;
+            }
+            .divCell {
+                padding: 0px;
+            }
+        </style>
+        
+        <iron-media-query query="(min-width: 430px)" query-matches="{{esAlMenos430px}}"></iron-media-query>
+        <iron-media-query query="(max-width: 1024px)" query-matches="{{esSuperiorA1024px}}"></iron-media-query>
+        
+        <div class="divTable"> 
+            <div class="divRow">
+                <div class="divCell contenido">
+                    <lavu-grid>
+                        <lavu-cell span="4">
+                            <template is="dom-if" if="{{esSuperiorA1024px}}">Factura</template> 
+                            <template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                            <span class="textoGris">{{factura}}</span>
+                        </lavu-cell>
+                        <lavu-cell span="4">
+                            <template is="dom-if" if="{{esSuperiorA1024px}}">Periodo/Fecha</template> 
+                            <template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                          <span class="textoGris">{{periodo}} - {{fecha}}</span>
+                        </lavu-cell>
+                        <lavu-cell span="2">
+                            <template is="dom-if" if="{{esSuperiorA1024px}}">Monto</template>
+                                <template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                            <span class="textoGris">₡{{monto}}</span>
+                        </lavu-cell>
+                        <lavu-cell span="6">
+                            <template is="dom-if" if="{{esSuperiorA1024px}}">Lugar</template>
+                            <template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                            <span class="textoGris">{{lugar}}</span>
+                        </lavu-cell>
+                    </lavu-grid>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'com-pago-contrato',
+            properties: {
+                data: Object,
+                factura: {
+                    type: String,
+                    computed: '_setFactura(data)'
+                },
+                periodo: {
+                    type: String,
+                    computed: '_setPeriodo(data)'
+                },
+                fecha: {
+                    type:String,
+                    computed: '_setFecha(data)'
+                },
+                monto: {
+                    type:String,
+                    computed: '_setMonto(data)'
+                },
+                lugar: {
+                    type:String,
+                    computed: '_setLugar(data)'
+                }
+            },
+            _setFactura: function(data){
+                return data.Factura;
+            },
+            _setPeriodo: function(data){
+                return data.Periodo;
+            },
+            _setFecha: function(data){
+                return data.Fecha.substring(0,10);
+            },
+            _setMonto: function(data){
+                return data.Monto;
+            },
+            _setLugar: function(data){
+                return data.Lugar;
+            }
+            
+        });
+    </script>
+</dom-module>

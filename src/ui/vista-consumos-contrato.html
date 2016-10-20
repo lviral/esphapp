@@ -1,0 +1,55 @@
+<link rel="import" href="../com/lista-consumos-contrato.html">
+
+<dom-module id="vista-consumos-contrato">
+
+  <template>
+
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+        }
+        lista-pagos-contrato {
+            margin-top:40px;
+        }
+    </style>
+    <paper-material  elevation="2">
+        <div class="divTable">
+          <div class="divRow">
+             <div class="divCell filtrosBusqueda" style="width:55%;">
+                <paper-input label='Contrato' value='{{txtContratoConsulta}}' type="number"></paper-input>
+             </div>
+             <div class="divCell filtrosBusqueda" style="width:40%;">
+                <paper-input label='Año' value='{{txtAnio}}' type="number"></paper-input>
+             </div>
+             <div class="divCell">
+                <paper-fab icon="add" mini="true" on-click='_agregarTipoContrato'></paper-fab>
+             </div>
+          </div>
+        </div>
+      </paper-material>
+    <lista-consumos-contrato contrato-consulta="{{contratoConsulta}}" anio-consulta="{{anioConsulta}}"></lista-consumos-contrato>
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'vista-consumos-contrato',
+      properties: {
+        contratoConsulta: String,
+        anioConsulta: String,
+        txtAnio: {
+            type: String,
+            value: 2016
+        }
+      },
+      _agregarTipoContrato: function() {
+          this.contratoConsulta = this.txtContratoConsulta;
+          this.anioConsulta = this.txtAnio;
+          this.txtContratoConsulta = '';
+      }
+    });
+
+  </script>
+
+</dom-module>

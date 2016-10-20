@@ -26,6 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-ajax/iron-request.html">
 <link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../bower_components/iron-meta/iron-meta.html">
@@ -137,9 +138,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-icon-button icon="maps:store-mall-directory"></paper-icon-button>
               Puntos de pago
           </a>
-          <a name="vistaContacto" style="border-bottom: 1px solid gray" href="/contacto">
+          <a name="vistaContacto"  href="/contacto">
               <paper-icon-button icon="communication:contact-mail"></paper-icon-button>
               Contáctenos
+          </a>
+          <a name="vistaPagosContrato" href="/pagos-contrato">
+              <paper-icon-button icon="editor:attach-money"></paper-icon-button>
+              Historial de pagos
+          </a>
+          <a name="vistaConsumosContrato" style="border-bottom: 1px solid gray" href="/consumos-contrato">
+              <paper-icon-button icon="icons:assessment"></paper-icon-button>
+              Historial de consumos
           </a>
           <!--<a name="vistaPrueba" href="/prueba">Prueba</a>-->
         </iron-selector>
@@ -161,6 +170,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <vista-suspensiones name="suspensiones"></vista-suspensiones>
           <vista-puntos-recaudacion name="puntos-recaudacion"></vista-puntos-recaudacion>
           <vista-contacto name="contacto"></vista-contacto>
+          <vista-pagos-contrato name="pagos-contrato"></vista-pagos-contrato>
+          <vista-consumos-contrato name="consumos-contrato"></vista-consumos-contrato>
           <vista-prueba name="prueba"></vista-prueba>
         </iron-pages>
 
@@ -206,6 +217,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 break;
             case 'contacto':
                 this.titulo = 'Contacto';
+                break;
+            case 'pagos-contrato':
+                this.titulo = 'Historial de pagos';
+                break;
+            case 'consumos-contrato':
+                this.titulo = 'Historial de consumos';
                 break;
             default:
                 this.titulo = 'Consulta y pagos';

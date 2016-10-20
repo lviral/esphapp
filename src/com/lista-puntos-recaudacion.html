@@ -2,18 +2,11 @@
 <dom-module id="lista-puntos-recaudacion">
     <template>
         <rest-api endpoint="drupal" query-string="views/recaudadores.json" respuesta="{{respuesta}}"></rest-api>
-        
-        
-         <lavu-grid>
-        <template is="dom-repeat" items="{{respuesta}}" as="recaudador" index-as="indice">
-            <!--<template is="dom-if" if="{{_indicePar(indice)}}">
-            {{indice}}
-            </template>-->
-            
-           
-                        <lavu-cell span="8">
-                            <com-punto-recaudacion data="{{recaudador}}"></com-punto-recaudacion>
-                        </lavu-cell>
+        <lavu-grid>
+            <template is="dom-repeat" items="{{respuesta}}" as="recaudador" index-as="indice">
+                <lavu-cell span="8">
+                    <com-punto-recaudacion data="{{recaudador}}"></com-punto-recaudacion>
+                </lavu-cell>
         </template>
         </lavu-grid>
     </template>

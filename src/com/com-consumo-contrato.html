@@ -1,0 +1,79 @@
+<dom-module id="com-consumo-contrato">
+    <template>
+        <style include="shared-styles">
+            :host {
+                width: 100%;
+                padding: 0px;
+            }
+            .divTable {
+                border-top: 1px solid gray;
+            }
+            .avatar {
+                width: 10%;
+                text-align: center;
+            }
+            .contenido {
+                width: 90%;
+            }
+            .divCell {
+                padding: 0px;
+            }
+        </style>
+        
+        <iron-media-query query="(min-width: 430px)" query-matches="{{esAlMenos430px}}"></iron-media-query>
+        <iron-media-query query="(max-width: 1024px)" query-matches="{{esSuperiorA1024px}}"></iron-media-query>
+        
+        <div class="divTable"> 
+            <div class="divRow">
+                <div class="divCell contenido">
+                    <lavu-grid>
+                        <lavu-cell span="6">
+                            <template is="dom-if" if="{{esSuperiorA1024px}}">Periodo</template> 
+                            <template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                          <span class="textoGris">{{periodo}}</span>
+                        </lavu-cell>
+                        <lavu-cell span="6">
+                            <template is="dom-if" if="{{esSuperiorA1024px}}">Fecha</template>
+                                <template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                            <span class="textoGris">{{fecha}}</span>
+                        </lavu-cell>
+                        <lavu-cell span="4">
+                            <template is="dom-if" if="{{esSuperiorA1024px}}">Consumo</template> 
+                            <template is="dom-if" if="{{esAlMenos430px}}"><br></template> 
+                            <span class="textoGris">{{valor}}</span>
+                        </lavu-cell>
+                    </lavu-grid>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'com-consumo-contrato',
+            properties: {
+                data: Object,
+                valor: {
+                    type: String,
+                    computed: '_setValor(data)'
+                },
+                periodo: {
+                    type: String,
+                    computed: '_setPeriodo(data)'
+                },
+                fecha: {
+                    type:String,
+                    computed: '_setFecha(data)'
+                }
+            },
+            _setValor: function(data){
+                return data.Valor;
+            },
+            _setPeriodo: function(data){
+                return data.Periodo;
+            },
+            _setFecha: function(data){
+                return data.Fecha.substring(0,10);
+            }
+        });
+    </script>
+</dom-module>
