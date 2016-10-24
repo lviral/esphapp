@@ -2,8 +2,22 @@
   "entrypoint": "index.html",
   "shell": "src/my-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html"
+    "src/ui/vista-averias.html",
+    "src/ui/vista-consumos-contrato.html",
+    "src/ui/vista-contacto.html",
+    "src/ui/vista-pagos.html",
+    "src/ui/vista-pagos-contrato.html",
+    "src/ui/vista-puntos-recaudacion.html",
+    "src/ui/vista-suspensiones.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "images/**/*",
+    "bower.json"
+  ],
+  "includeDependencies": [
+    "pwa/bower_components/webcomponentsjs/webcomponents-lite.min.js"
   ]
 }
+
+

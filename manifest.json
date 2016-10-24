@@ -22,7 +22,7 @@
       "sizes": "384x384",
       "type": "image/svg"
     }],
-  "start_url": "/",
+  "start_url": "../pwa/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#00a1df"

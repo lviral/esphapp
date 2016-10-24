@@ -104,7 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <app-location route="{{route}}"></app-location>
+    <app-location route="{{route}}" use-hash-as-path></app-location>
     <app-route
         route="{{route}}"
         pattern="/:page"
@@ -122,31 +122,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <img src="../images/logonuevo_esph.png" alt="esph-logo" style="margin-top:20px;">
         </app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="vistaPagos" href="/pagos">
+          <a name="vistaPagos" href="#/pagos">
               <paper-icon-button icon="payment"></paper-icon-button>
               Consulta y pago
           </a>
-          <a name="vistaAverias" href="/averias">
+          <a name="vistaAverias" href="#/averias">
               <paper-icon-button icon="warning"></paper-icon-button>
               Reportar avería
           </a>
-          <a name="vistaSuspensiones" href="/suspensiones">
+          <a name="vistaSuspensiones" href="#/suspensiones">
               <paper-icon-button icon="icons:add-alert"></paper-icon-button>
               Suspensiones
           </a>
-          <a name="vistaPuntosRecaudacion" href="/puntos-recaudacion">
+          <a name="vistaPuntosRecaudacion" href="#/puntos-recaudacion">
               <paper-icon-button icon="maps:store-mall-directory"></paper-icon-button>
               Puntos de pago
           </a>
-          <a name="vistaContacto"  href="/contacto">
+          <a name="vistaContacto"  href="#/contacto">
               <paper-icon-button icon="communication:contact-mail"></paper-icon-button>
               Contáctenos
           </a>
-          <a name="vistaPagosContrato" href="/pagos-contrato">
+          <a name="vistaPagosContrato" href="#/pagos-contrato">
               <paper-icon-button icon="editor:attach-money"></paper-icon-button>
               Historial de pagos
           </a>
-          <a name="vistaConsumosContrato" style="border-bottom: 1px solid gray" href="/consumos-contrato">
+          <a name="vistaConsumosContrato" style="border-bottom: 1px solid gray" href="#/consumos-contrato">
               <paper-icon-button icon="icons:assessment"></paper-icon-button>
               Historial de consumos
           </a>
@@ -203,6 +203,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function(page) {
+          
         this.page = page || 'pagos';
         
         switch(page) {
